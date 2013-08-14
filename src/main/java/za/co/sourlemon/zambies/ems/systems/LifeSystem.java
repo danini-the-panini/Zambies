@@ -2,9 +2,7 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import static za.co.sourlemon.zambies.Utils.*;
-import static java.lang.Math.*;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.nodes.BulletNode;
 import za.co.sourlemon.zambies.ems.nodes.LifeNode;
@@ -13,16 +11,8 @@ import za.co.sourlemon.zambies.ems.nodes.LifeNode;
  *
  * @author daniel
  */
-public class LifeSystem implements ISystem
+public class LifeSystem extends AbstractSystem
 {
-    Engine engine;
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
-    }
 
     @Override
     public void update(double delta)

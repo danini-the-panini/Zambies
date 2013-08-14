@@ -2,23 +2,14 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import za.co.sourlemon.zambies.ems.nodes.MotionNode;
 import java.util.List;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 
 /**
  *
  * @author daniel
  */
-public class MotionSystem implements ISystem
+public class MotionSystem extends AbstractSystem
 {
-    Engine engine;
-    
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
-    }
 
     @Override
     public void update(double delta)

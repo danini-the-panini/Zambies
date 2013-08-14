@@ -1,10 +1,14 @@
 package za.co.sourlemon.zambies;
 
+import java.util.Random;
+
 /**
  *
  * @author user
  */
 public class Utils {
+    
+    public static final Random random = new Random(System.currentTimeMillis());
     
     public static float invSqrt(float x) {
         float xhalf = 0.5f*x;
