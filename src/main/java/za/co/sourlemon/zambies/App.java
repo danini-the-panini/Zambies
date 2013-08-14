@@ -1,7 +1,7 @@
 package za.co.sourlemon.zambies;
 
 import za.co.sourlemon.zambies.ems.systems.MotionSystem;
-import za.co.sourlemon.zambies.ems.systems.RenderSystem;
+import za.co.sourlemon.zambies.ems.systems.AWTRenderSystem;
 import za.co.sourlemon.zambies.ems.systems.MotionControlSystem;
 import za.co.sourlemon.zambies.ems.systems.MouseControlSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAISystem;
@@ -9,13 +9,12 @@ import za.co.sourlemon.zambies.ems.systems.LifeSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttractorSystem;
 import za.co.sourlemon.zambies.ems.systems.LifetimeSystem;
 import za.co.sourlemon.zambies.ems.systems.GunControlSystem;
-import za.co.sourlemon.zambies.ems.systems.CameraLockSystem;
-import java.awt.Color;
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.concurrent.atomic.AtomicBoolean;
 import za.co.sourlemon.zambies.ems.Engine;
+import za.co.sourlemon.zambies.ems.Entity;
+import za.co.sourlemon.zambies.ems.components.KeyEvents;
+import za.co.sourlemon.zambies.ems.components.MouseEvents;
+import za.co.sourlemon.zambies.ems.components.WindowEvents;
+import za.co.sourlemon.zambies.ems.nodes.EventNode;
 
 /**
  *
@@ -31,49 +30,23 @@ public class App
      */
     public static void main(String[] args)
     {
-
-        RenderCanvas canvas = new RenderCanvas();
-        final Keyboard keyboard = new Keyboard();
-        canvas.addKeyListener(keyboard);
-        final Camera camera = new Camera();
-        canvas.addComponentListener(camera);
-        final Mouse mouse = new Mouse(camera);
-        canvas.addMouseListener(mouse);
-        canvas.addMouseMotionListener(mouse);
-        
-        final Frame frame = new Frame("Zambies!");
-        frame.add(canvas);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
-        canvas.init();
-        canvas.requestFocus();
-        
         final Engine engine = new Engine();
-        final EntityFactory factory = new EntityFactory(engine, keyboard, mouse);
         
-        engine.addSystem(new ZambieAttractorSystem(factory));
+        Entity entity = new Entity();
+        entity.add(new WindowEvents());
+        entity.add(new KeyEvents());
+        entity.add(new MouseEvents());
+        engine.addEntity(entity);
+        
+        engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new LifetimeSystem());
-        engine.addSystem(new MotionControlSystem(keyboard));
+        engine.addSystem(new MotionControlSystem());
         engine.addSystem(new MotionSystem());
-        engine.addSystem(new MouseControlSystem(mouse));
-        engine.addSystem(new GunControlSystem(keyboard, mouse, factory));
+        engine.addSystem(new MouseControlSystem());
+        engine.addSystem(new GunControlSystem());
         engine.addSystem(new LifeSystem());
-        engine.addSystem(new CameraLockSystem(camera));
-        engine.addSystem(new RenderSystem(canvas,camera,Color.WHITE));
-        
-        final AtomicBoolean running = new AtomicBoolean(true);
-        
-        frame.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                running.set(false);
-                engine.shutDown();
-                frame.dispose();
-                System.exit(0);
-            }
-        });
+        engine.addSystem(new AWTRenderSystem());
         
         new Thread(new Runnable() {
 
@@ -82,7 +55,9 @@ public class App
             @Override
             public void run()
             {
-                while (running.get())
+                EventNode events = engine.getNode(EventNode.class);
+                
+                while (!events.window.windowClosing)
                 {
                     long now = System.nanoTime();
                     double delta = (double)(now - lastTime)/NANOS_PER_SECOND;
@@ -90,9 +65,11 @@ public class App
 
                     engine.update(delta);
                 }
+                
+                engine.shutDown();
             }
         }).start();
         
-        factory.createSurvivor(0, 0);
+        EntityFactory.createSurvivor(0, 0, engine);
     }
 }

@@ -9,8 +9,6 @@ import za.co.sourlemon.zambies.ems.components.ZambieAI;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import za.co.sourlemon.zambies.Keyboard;
-import za.co.sourlemon.zambies.Mouse;
 import za.co.sourlemon.zambies.ems.components.Bullet;
 import za.co.sourlemon.zambies.ems.components.Gun;
 import za.co.sourlemon.zambies.ems.components.GunControl;
@@ -19,29 +17,25 @@ import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Velocity;
 import static java.lang.Math.*;
-import java.util.Random;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
 
 /**
- *
+ * Provides some static factory methods for any system to spawn pre-configured game objects.
+ * 
  * @author daniel
  */
-public class EntityFactory
+public final class EntityFactory
 {
-    Engine engine;
-    Keyboard keyboard;
-    Mouse mouse;
-    Random random = new Random();
-
-    public EntityFactory(Engine engine, Keyboard keyboard, Mouse mouse)
-    {
-        this.engine = engine;
-        this.keyboard = keyboard;
-        this.mouse = mouse;
-    }
+    private EntityFactory() {}
     
-    public void createSurvivor(float x, float y)
+    /**
+     * Create a survivor object at the specified point.
+     * @param x
+     * @param y
+     * @param engine 
+     */
+    public static void createSurvivor(float x, float y, Engine engine)
     {
         Entity entity = new Entity();
         
@@ -59,11 +53,21 @@ public class EntityFactory
         engine.addEntity(entity);
     }
     
-    public void createBullet(float damage, float life, float x, float y, float theta, float speed)
+    /**
+     * Create a bullet/projectile at the specified location with specified parameters.
+     * @param damage how much damage the bullet can inflict.
+     * @param life how long (in seconds) the bullet will exist for.
+     * @param x
+     * @param y
+     * @param theta
+     * @param speed
+     * @param engine 
+     */
+    public static void createBullet(float damage, float life, float x, float y, float theta, float speed, Engine engine)
     {
         Entity entity = new Entity();
         
-        theta += (float)(random.nextGaussian()*PI/64f);
+        theta += (float)(Utils.random.nextGaussian()*PI/64f);
         
         entity.add(new Bullet(damage));
         entity.add(new Lifetime(life));
@@ -74,7 +78,16 @@ public class EntityFactory
         engine.addEntity(entity);
     }
 
-    public void createZambie(float x, float y, float dist, float speed)
+    /**
+     * Create a Zambie that is 'dist' units away from the specified location.
+     * This is for spawning Zambies around a survivor, for instance.
+     * @param x
+     * @param y
+     * @param dist how far away from the point the Zambie should be spawned.
+     * @param speed
+     * @param engine 
+     */
+    public static void createZambie(float x, float y, float dist, float speed, Engine engine)
     {
         Entity entity = new Entity();
 
@@ -86,7 +99,7 @@ public class EntityFactory
         float scale = (float)(4+Math.random()*2);
         entity.add(new Position(x+cos*dist, y+sin*dist, theta+(float)PI, scale, scale));
         entity.add(new Velocity(0, 0, 0));
-        entity.add(new ZambieAI(speed+(float)random.nextGaussian()*(speed*0.1f)));
+        entity.add(new ZambieAI(speed+(float)Utils.random.nextGaussian()*(speed*0.1f)));
         entity.add(new Life(30));
         entity.add(new Lifetime(300)); // 5 minute liftime (to stop too many zambies on screen)
         entity.add(new Renderable(Color.GREEN));
