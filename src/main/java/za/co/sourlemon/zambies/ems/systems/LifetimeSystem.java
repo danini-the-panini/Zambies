@@ -1,24 +1,15 @@
 package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.nodes.LifetimeNode;
 
 /**
  *
  * @author daniel
  */
-public class LifetimeSystem implements ISystem
+public class LifetimeSystem extends AbstractSystem
 {
-    Engine engine;
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
-    }
 
     @Override
     public void update(double delta)

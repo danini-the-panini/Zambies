@@ -2,29 +2,20 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import za.co.sourlemon.zambies.Keyboard;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.nodes.MotionControlNode;
 
 /**
  *
  * @author daniel
  */
-public class MotionControlSystem implements ISystem
+public class MotionControlSystem extends AbstractSystem
 {
     Keyboard keyboard;
-    Engine engine;
 
     public MotionControlSystem(Keyboard keyboard)
     {
         this.keyboard = keyboard;
-    }
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
     }
 
     @Override

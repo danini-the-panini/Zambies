@@ -3,29 +3,20 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import za.co.sourlemon.zambies.Mouse;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.nodes.MouseControlNode;
 
 /**
  *
  * @author daniel
  */
-public class MouseControlSystem implements ISystem
+public class MouseControlSystem extends AbstractSystem
 {
-    Engine engine;
     Mouse mouse;
 
     public MouseControlSystem(Mouse mouse)
     {
         this.mouse = mouse;
-    }
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
     }
 
     @Override

@@ -7,33 +7,24 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 import za.co.sourlemon.zambies.Camera;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.RenderCanvas;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 
 /**
  *
  * @author daniel
  */
-public class RenderSystem implements ISystem
+public class RenderSystem extends AbstractSystem
 {
     Color bg;
     Camera camera;
     RenderCanvas canvas;
-    Engine engine;
 
     public RenderSystem(RenderCanvas canvas, Camera camera, Color bg)
     {
         this.bg = bg;
         this.camera = camera;
         this.canvas = canvas;
-    }
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
     }
 
     @Override

@@ -1,26 +1,17 @@
 package za.co.sourlemon.zambies.ems.systems;
 
-import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.EntityFactory;
 import za.co.sourlemon.zambies.ems.nodes.ZambieAttractorNode;
 import java.util.List;
-import za.co.sourlemon.zambies.ems.Engine;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 
-public class ZambieAttractorSystem implements ISystem
+public class ZambieAttractorSystem extends AbstractSystem
 {
-    Engine engine;
     EntityFactory factory;
 
     public ZambieAttractorSystem(EntityFactory factory)
     {
         this.factory = factory;
-    }
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this. engine = engine;
-        return true;
     }
 
     @Override

@@ -2,29 +2,20 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import za.co.sourlemon.zambies.Camera;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.nodes.CameraLockNode;
 
 /**
  *
  * @author daniel
  */
-public class CameraLockSystem implements ISystem
+public class CameraLockSystem extends AbstractSystem
 {
     Camera camera;
-    Engine engine;
 
     public CameraLockSystem(Camera camera)
     {
         this.camera = camera;
-    }
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
     }
 
     @Override

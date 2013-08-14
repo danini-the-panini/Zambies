@@ -1,28 +1,19 @@
 package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
-import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.nodes.ZambieAINode;
 import za.co.sourlemon.zambies.ems.nodes.ZambieAttractorNode;
 import static java.lang.Math.*;
 import static za.co.sourlemon.zambies.Utils.*;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 
 /**
  *
  * @author daniel
  */
-public class ZambieAISystem implements ISystem
+public class ZambieAISystem extends AbstractSystem
 {
-    Engine engine;
-
-    @Override
-    public boolean start(Engine engine)
-    {
-        this.engine = engine;
-        return true;
-    }
 
     @Override
     public void update(double delta)
