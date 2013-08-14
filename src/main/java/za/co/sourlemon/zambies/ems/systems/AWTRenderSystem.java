@@ -20,6 +20,7 @@ import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
+import static za.co.sourlemon.zambies.App.*;
 
 /**
  *
@@ -27,11 +28,7 @@ import za.co.sourlemon.zambies.ems.nodes.EventNode;
  */
 public class AWTRenderSystem extends AbstractSystem
 {
-    // TODO: add these to some kind of global config
 
-    public static final int SCREEN_WIDTH = 800;
-    public static final int SCREEN_HEIGHT = 600;
-    public static final String WINDOW_TITLE = "Zambies!";
     private Frame frame;
     private RenderCanvas canvas;
     private boolean[] keys = new boolean[65535];
@@ -43,7 +40,7 @@ public class AWTRenderSystem extends AbstractSystem
     private void handleEvents()
     {
         EventNode events = engine.getNode(EventNode.class);
-        
+
         System.arraycopy(keys, 0, events.keyboard.keys, 0, keys.length);
         System.arraycopy(button, 0, events.mouse.button, 0, button.length);
         events.mouse.x = mouseX - camX - camOX;
@@ -68,7 +65,7 @@ public class AWTRenderSystem extends AbstractSystem
     public boolean start(Engine engine)
     {
         super.start(engine);
-        
+
         canvas = new RenderCanvas();
 
         frame = new Frame(WINDOW_TITLE);
@@ -78,9 +75,9 @@ public class AWTRenderSystem extends AbstractSystem
         frame.setResizable(false);
         canvas.init();
         canvas.requestFocus();
-        
-        camOX = SCREEN_WIDTH/2;
-        camOY = SCREEN_HEIGHT/2;
+
+        camOX = SCREEN_WIDTH / 2;
+        camOY = SCREEN_HEIGHT / 2;
 
         frame.addWindowListener(new WindowAdapter()
         {
@@ -144,7 +141,7 @@ public class AWTRenderSystem extends AbstractSystem
     public void update(double delta)
     {
         handleEvents();
-        
+
         Graphics2D g = (Graphics2D) canvas.strategy.getDrawGraphics();
 
         g.setBackground(Color.WHITE);
@@ -154,7 +151,7 @@ public class AWTRenderSystem extends AbstractSystem
         g.transform(AffineTransform.getTranslateInstance(camX + camOX, camY + camOY));
 
         List<RenderNode> nodes = engine.getNodeList(RenderNode.class);
-        
+
         for (RenderNode node : nodes)
         {
             if (node.entity.has(CameraLock.class))
@@ -162,7 +159,7 @@ public class AWTRenderSystem extends AbstractSystem
                 camX = -node.position.x;
                 camY = -node.position.y;
             }
-            
+
             AffineTransform oldT = g.getTransform();
 
             g.transform(AffineTransform.getTranslateInstance(

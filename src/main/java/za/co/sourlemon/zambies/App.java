@@ -24,6 +24,9 @@ public class App
 {
 
     public static final double NANOS_PER_SECOND = 1000000000.0;
+    public static final int SCREEN_WIDTH = 800;
+    public static final int SCREEN_HEIGHT = 600;
+    public static final String WINDOW_TITLE = "Zambies!";
 
     /**
      * @param args the command line arguments
@@ -31,13 +34,13 @@ public class App
     public static void main(String[] args)
     {
         final Engine engine = new Engine();
-        
+
         Entity entity = new Entity();
         entity.add(new WindowEvents());
         entity.add(new KeyEvents());
         entity.add(new MouseEvents());
         engine.addEntity(entity);
-        
+
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new LifetimeSystem());
@@ -47,29 +50,29 @@ public class App
         engine.addSystem(new GunControlSystem());
         engine.addSystem(new LifeSystem());
         engine.addSystem(new AWTRenderSystem());
-        
-        new Thread(new Runnable() {
 
+        new Thread(new Runnable()
+        {
             long lastTime = System.nanoTime();
-            
+
             @Override
             public void run()
             {
                 EventNode events = engine.getNode(EventNode.class);
-                
+
                 while (!events.window.windowClosing)
                 {
                     long now = System.nanoTime();
-                    double delta = (double)(now - lastTime)/NANOS_PER_SECOND;
+                    double delta = (double) (now - lastTime) / NANOS_PER_SECOND;
                     lastTime = now;
 
                     engine.update(delta);
                 }
-                
+
                 engine.shutDown();
             }
         }).start();
-        
+
         EntityFactory.createSurvivor(0, 0, engine);
     }
 }

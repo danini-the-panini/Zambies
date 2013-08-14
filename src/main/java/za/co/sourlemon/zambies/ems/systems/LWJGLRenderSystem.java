@@ -1,39 +1,31 @@
 package za.co.sourlemon.zambies.ems.systems;
 
-import java.awt.Color;
 import java.util.List;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import za.co.sourlemon.zambies.Camera;
+import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Engine;
-import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.nodes.RenderNode;
+import static za.co.sourlemon.zambies.App.*;
+import static za.co.sourlemon.zambies.Utils.*;
+import za.co.sourlemon.zambies.ems.nodes.EventNode;
 
 /**
  *
  * @author Daniel
  */
-public class LWJGLRenderSystem implements ISystem
+public class LWJGLRenderSystem extends AbstractSystem
 {
-    // TODO: put these in a config file or something
 
-    public static final int SCREEN_WIDTH = 800;
-    public static final int SCREEN_HEIGHT = 600;
-    Color bg;
-    Camera camera;
-    Engine engine;
-
-    public LWJGLRenderSystem(Camera camera, Color bg)
-    {
-        this.bg = bg;
-        this.camera = camera;
-    }
+    private float camX, camY, camOX, camOY;
 
     @Override
     public boolean start(Engine engine)
     {
-        this.engine = engine;
+        super.start(engine);
 
         try
         {
@@ -51,15 +43,29 @@ public class LWJGLRenderSystem implements ISystem
     @Override
     public void update(double delta)
     {
-        // TODO: if (Display.isCloseRequested()) ...
+        // TODO: use the event buffer to do this.
+        
+        EventNode events = engine.getNode(EventNode.class);
+        events.mouse.x = Mouse.getX() - camX - camOX;
+        events.mouse.x = Mouse.getY() - camY - camOY;
+        for (int i = 0; i < Mouse.getButtonCount(); i++)
+        {
+            events.mouse.button[i] = Mouse.isButtonDown(i);
+        }
+        events.window.windowClosing = Display.isCloseRequested();
+        for (int i = 0; i < Keyboard.getKeyCount(); i++)
+        {
+            int awtKey = LWJGLtoAWT(i);
+            events.keyboard.keys[awtKey] = Keyboard.isKeyDown(i);
+        }
 
         List<RenderNode> nodes = engine.getNodeList(RenderNode.class);
 
         for (RenderNode node : nodes)
         {
-            
+            // TODO: render some stuff!
         }
-        
+
         Display.update();
     }
 
