@@ -8,13 +8,22 @@
     <packaging>jar</packaging>
 
     <name>Zambies</name>
-    <url>http://maven.apache.org</url>
+    <url>http://www.sourlemon.co.za/Zambies</url>
+  
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <natives.version>0.0.7</natives.version>
+        <lwjgl.version>2.9.0</lwjgl.version>
+        <junit.version>4.11</junit.version>
+        <compiler.version>3.1</compiler.version>
+    </properties>
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>${compiler.version}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -23,12 +32,13 @@
             <plugin>
                 <groupId>com.googlecode.mavennatives</groupId>
                 <artifactId>maven-nativedependencies-plugin</artifactId>
-                <version>0.0.5</version>
+                <version>${natives.version}</version>
                 <executions>
                     <execution>
                         <id>unpacknatives</id>
                         <phase>generate-resources</phase>
                         <goals>
+                            <!--suppress MavenModelInspection (this line is for IDEA)-->
                             <goal>copy</goal>
                         </goals>
                     </execution>
@@ -36,27 +46,29 @@
             </plugin>
         </plugins>
     </build>
-  
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    
+    <repositories>
+        <repository>
+            <id>mavenNatives</id>
+            <name>Maven Natives Repository</name>
+            <url>http://mavennatives.googlecode.com/svn/repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.lwjgl.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
-            <version>2.8.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hackoeur</groupId>
-            <artifactId>jglm</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${lwjgl.version}</version>
         </dependency>
     </dependencies>
 </project>

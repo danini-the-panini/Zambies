@@ -15,6 +15,7 @@ import za.co.sourlemon.zambies.ems.components.KeyEvents;
 import za.co.sourlemon.zambies.ems.components.MouseEvents;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
+import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
 
 /**
  *
@@ -41,6 +42,8 @@ public class App
         entity.add(new MouseEvents());
         engine.addEntity(entity);
 
+        EntityFactory.createSurvivor(0, 0, engine);
+
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new LifetimeSystem());
@@ -49,30 +52,22 @@ public class App
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new GunControlSystem());
         engine.addSystem(new LifeSystem());
-        engine.addSystem(new AWTRenderSystem());
+        engine.addSystem(new LWJGLRenderSystem());
 
-        new Thread(new Runnable()
+        long lastTime = System.nanoTime();
+
+        EventNode events = engine.getNode(EventNode.class);
+
+        while (!events.window.windowClosing)
         {
-            long lastTime = System.nanoTime();
+            long now = System.nanoTime();
+            double delta = (double) (now - lastTime) / NANOS_PER_SECOND;
+            lastTime = now;
 
-            @Override
-            public void run()
-            {
-                EventNode events = engine.getNode(EventNode.class);
+            engine.update(delta);
+        }
 
-                while (!events.window.windowClosing)
-                {
-                    long now = System.nanoTime();
-                    double delta = (double) (now - lastTime) / NANOS_PER_SECOND;
-                    lastTime = now;
+        engine.shutDown();
 
-                    engine.update(delta);
-                }
-
-                engine.shutDown();
-            }
-        }).start();
-
-        EntityFactory.createSurvivor(0, 0, engine);
     }
 }
