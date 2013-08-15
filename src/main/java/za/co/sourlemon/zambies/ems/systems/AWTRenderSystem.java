@@ -187,4 +187,11 @@ public class AWTRenderSystem extends AbstractSystem
     {
         frame.dispose();
     }
+
+    @Override
+    public String toString()
+    {
+        return "AWT";
+    }
+    
 }

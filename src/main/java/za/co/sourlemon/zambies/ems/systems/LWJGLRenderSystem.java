@@ -127,4 +127,11 @@ public class LWJGLRenderSystem extends AbstractSystem
     {
         Display.destroy();
     }
+
+    @Override
+    public String toString()
+    {
+        return "LWJGL";
+    }
+    
 }

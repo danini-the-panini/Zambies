@@ -1,5 +1,6 @@
 package za.co.sourlemon.zambies;
 
+import javax.swing.JOptionPane;
 import za.co.sourlemon.zambies.ems.systems.MotionSystem;
 import za.co.sourlemon.zambies.ems.systems.AWTRenderSystem;
 import za.co.sourlemon.zambies.ems.systems.MotionControlSystem;
@@ -11,6 +12,7 @@ import za.co.sourlemon.zambies.ems.systems.LifetimeSystem;
 import za.co.sourlemon.zambies.ems.systems.GunControlSystem;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
+import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.components.KeyEvents;
 import za.co.sourlemon.zambies.ems.components.MouseEvents;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
@@ -34,6 +36,11 @@ public class App
      */
     public static void main(String[] args)
     {
+        ISystem[] renderSystems = new ISystem[]{
+            new AWTRenderSystem(),
+            new LWJGLRenderSystem()
+        };
+        
         final Engine engine = new Engine();
 
         Entity entity = new Entity();
@@ -52,7 +59,10 @@ public class App
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new GunControlSystem());
         engine.addSystem(new LifeSystem());
-        engine.addSystem(new LWJGLRenderSystem());
+        engine.addSystem((ISystem)JOptionPane.showInputDialog(
+                null, "Select Rendering System", "Render System",
+                JOptionPane.QUESTION_MESSAGE, null, renderSystems,
+                renderSystems[0]));
 
         long lastTime = System.nanoTime();
 
