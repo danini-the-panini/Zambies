@@ -107,8 +107,8 @@ public class LWJGLRenderSystem extends AbstractSystem
     {
         GL11.glPushMatrix();
         GL11.glTranslatef(x, y, 0);
-        GL11.glScalef(scaleX, scaleY, 1);
         GL11.glRotatef(theta, 0, 0, 1);
+        GL11.glScalef(scaleX, scaleY, 1);
 
         GL11.glBegin(GL11.GL_QUADS);
 
