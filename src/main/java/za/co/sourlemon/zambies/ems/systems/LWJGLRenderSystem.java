@@ -38,7 +38,7 @@ public class LWJGLRenderSystem extends AbstractSystem
 
             // 2D game, Z-order defined by order of drawing
             GL11.glDisable(GL11.GL_DEPTH_TEST);
-            
+
             GL11.glClearColor(1, 1, 1, 1);
         } catch (LWJGLException ex)
         {
@@ -55,8 +55,8 @@ public class LWJGLRenderSystem extends AbstractSystem
         // TODO: use the event buffer to do this.
 
         EventNode events = engine.getNode(EventNode.class);
-        events.mouse.x = Mouse.getX();
-        events.mouse.x = Mouse.getY();
+        events.mouse.x = Mouse.getX() - camX - SCREEN_WIDTH / 2;
+        events.mouse.y = SCREEN_HEIGHT / 2 - Mouse.getY() - camY;
         for (int i = 0; i < Mouse.getButtonCount(); i++)
         {
             events.mouse.button[i] = Mouse.isButtonDown(i);
@@ -89,12 +89,12 @@ public class LWJGLRenderSystem extends AbstractSystem
                 camX = -node.position.x;
                 camY = -node.position.y;
             }
-            
+
             Renderable r = node.renderable;
             Position p = node.position;
             float[] c = r.color.getRGBComponents(null);
             drawQuad(p.x, p.y,
-                    (float)Math.toDegrees(p.theta),
+                    (float) Math.toDegrees(p.theta),
                     p.scaleX, p.scaleY,
                     c[0], c[1], c[2]);
         }
@@ -133,5 +133,4 @@ public class LWJGLRenderSystem extends AbstractSystem
     {
         return "LWJGL";
     }
-    
 }
