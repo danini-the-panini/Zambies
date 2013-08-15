@@ -59,13 +59,12 @@ public class LWJGLRenderSystem extends AbstractSystem
         events.mouse.y = SCREEN_HEIGHT / 2 - Mouse.getY() - camY;
         for (int i = 0; i < Mouse.getButtonCount(); i++)
         {
-            events.mouse.button[i] = Mouse.isButtonDown(i);
+            events.mouse.button[MouseLWJGLtoAWT(i)] = Mouse.isButtonDown(i);
         }
         events.window.windowClosing = Display.isCloseRequested();
         for (int i = 0; i < Keyboard.getKeyCount(); i++)
         {
-            int awtKey = LWJGLtoAWT(i);
-            events.keyboard.keys[awtKey] = Keyboard.isKeyDown(i);
+            events.keyboard.keys[KeyLWJGLtoAWT(i)] = Keyboard.isKeyDown(i);
         }
 
         List<RenderNode> nodes = engine.getNodeList(RenderNode.class);

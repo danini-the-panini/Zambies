@@ -1,8 +1,10 @@
 package za.co.sourlemon.zambies;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 /**
  *
@@ -44,7 +46,7 @@ public class Utils
         };
     }
 
-    public static int AWTtoLWJGL(int aCode)
+    public static int KeyAWTtoLWJGL(int aCode)
     {
         switch (aCode)
         {
@@ -270,7 +272,7 @@ public class Utils
         return Keyboard.KEY_NONE;
     }
 
-    public static int LWJGLtoAWT(int aCode)
+    public static int KeyLWJGLtoAWT(int aCode)
     {
         switch (aCode)
         {
@@ -494,5 +496,19 @@ public class Utils
                 return KeyEvent.VK_META;
         }
         return Keyboard.KEY_NONE;
+    }
+    
+    public static int MouseLWJGLtoAWT(int button)
+    {
+        switch (button)
+        {
+            case 0:
+                return MouseEvent.BUTTON1;
+            case 1:
+                return MouseEvent.BUTTON2;
+            case 2:
+                return MouseEvent.BUTTON3;
+        }
+        return button;
     }
 }
