@@ -37,23 +37,23 @@ public class ZambieAttractorSystem extends AbstractSystem
             }
         }
     }
-    
+
     private void createZambie(float x, float y, float dist, float speed)
     {
         Entity entity = new Entity();
 
-        float theta = (float)(random()*PI*2);
+        float theta = (float) (random() * PI * 2);
 
-        float cos = (float)cos(theta);
-        float sin = (float)sin(theta);
+        float cos = (float) cos(theta);
+        float sin = (float) sin(theta);
 
-        float scale = (float)(4+Math.random()*2);
-        entity.add(new Position(x+cos*dist, y+sin*dist, theta+(float)PI, scale, scale));
+        float scale = (float) (4 + Math.random() * 2);
+        entity.add(new Position(x + cos * dist, y + sin * dist, theta + (float) PI, scale, scale));
         entity.add(new Velocity(0, 0, 0));
-        entity.add(new ZambieAI(speed+(float)Utils.random.nextGaussian()*(speed*0.1f)));
+        entity.add(new ZambieAI(speed + (float) Utils.random.nextGaussian() * (speed * 0.1f)));
         entity.add(new Health(30));
         entity.add(new Lifetime(300)); // 5 minute liftime (to stop too many zambies on screen)
-        entity.add(new ZambieClaws(10));
+        entity.add(new ZambieClaws(10, 1)); // damge, APS
         entity.add(new Renderable(Color.GREEN));
 
         engine.addEntity(entity);

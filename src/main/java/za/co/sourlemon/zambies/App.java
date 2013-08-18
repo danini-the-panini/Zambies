@@ -75,7 +75,7 @@ public class App
         entity.add(new GunControl(MouseEvent.BUTTON1, true));
         entity.add(new Gun(1000, 10, 0.5f, 0.1));
         entity.add(new Renderable(Color.BLUE));
-        entity.add(new ZambieAttractor(0.5, 300, 25));
+        entity.add(new ZambieAttractor(1, 400, 25));
         entity.add(new CameraLock());
         entity.add(new Health(100));
         engine.addEntity(entity);

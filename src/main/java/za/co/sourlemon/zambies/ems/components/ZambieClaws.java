@@ -7,9 +7,12 @@ package za.co.sourlemon.zambies.ems.components;
 public class ZambieClaws
 {
     public float damage;
+    public double attackInterval, timeSinceLastAttack;
 
-    public ZambieClaws(float damage)
+    public ZambieClaws(float damage, double attackInterval)
     {
         this.damage = damage;
+        this.attackInterval = attackInterval;
+        this.timeSinceLastAttack = attackInterval;
     }
 }
