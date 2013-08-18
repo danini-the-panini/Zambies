@@ -41,9 +41,9 @@ public class Entity
             l.componentRemoved(this, componentClass);
     }
     
-    public Object get(Class componentClass)
+    public <C> C get(Class<C> componentClass)
     {
-        return components.get(componentClass);
+        return (C)components.get(componentClass);
     }
     
     public boolean has(Class componentClass)
