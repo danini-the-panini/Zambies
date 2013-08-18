@@ -25,6 +25,14 @@ public class ZambieAISystem extends AbstractSystem
         {
             Position zamPos = zambie.position;
             
+            if (lunches.isEmpty())
+            {
+                // TODO: make zambies "wander" when there is nothing to attract them
+                zambie.velocity.vx = 0;
+                zambie.velocity.vy = 0;
+                continue;
+            }
+            
             float leastSq = Float.POSITIVE_INFINITY;
             float vecX=0, vecY=0;
             for (ZambieAttractorNode lunch : lunches)
