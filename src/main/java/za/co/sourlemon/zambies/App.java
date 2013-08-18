@@ -30,6 +30,7 @@ import za.co.sourlemon.zambies.ems.components.Velocity;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
+import za.co.sourlemon.zambies.ems.systems.BulletSystem;
 import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttackSystem;
 
@@ -87,6 +88,7 @@ public class App
         engine.addSystem(new MotionSystem());
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new GunControlSystem());
+        engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
         engine.addSystem((ISystem)JOptionPane.showInputDialog(
                 null, "Select Rendering System", "Render System",
