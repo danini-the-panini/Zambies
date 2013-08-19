@@ -78,7 +78,7 @@ public class App
                 KeyEvent.VK_A, KeyEvent.VK_D, 150));
         survivor.add(new MouseLook());
         survivor.add(new GunControl(MouseEvent.BUTTON1, true));
-        survivor.add(new Gun(1000, 10, 0.5f, 0.1));
+        survivor.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float)Math.PI/64.0f));
         survivor.add(new Renderable(Color.BLUE));
         survivor.add(new ZambieAttractor(1, 400, 25));
         survivor.add(new CameraLock());
