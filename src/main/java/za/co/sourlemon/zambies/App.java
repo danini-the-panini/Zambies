@@ -31,6 +31,8 @@ import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
+import za.co.sourlemon.zambies.ems.factories.SurvivorFactory;
+import za.co.sourlemon.zambies.ems.factories.SurvivorFactoryRequest;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import za.co.sourlemon.zambies.ems.nodes.HealthBarSystem;
 import za.co.sourlemon.zambies.ems.systems.BulletSystem;
@@ -71,19 +73,9 @@ public class App
         engine.addEntity(eventEntity);
 
         // create survivor
-        Entity survivor = new Entity();
-        survivor.add(new Position(0, 0, 0, 6, 6));
-        survivor.add(new Velocity(0, 0, 0));
-        survivor.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
-                KeyEvent.VK_A, KeyEvent.VK_D, 150));
-        survivor.add(new MouseLook());
-        survivor.add(new GunControl(MouseEvent.BUTTON1, true));
-        survivor.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float)Math.PI/64.0f));
-        survivor.add(new Renderable(Color.BLUE));
-        survivor.add(new ZambieAttractor(1, 400, 25));
-        survivor.add(new CameraLock());
-        Health health = new Health(100);
-        survivor.add(health);
+        SurvivorFactory survivorFactory = new SurvivorFactory();
+        Entity survivor = survivorFactory.create(new SurvivorFactoryRequest(0, 0));
+        survivor.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float) Math.PI / 64.0f));
         engine.addEntity(survivor);
 
         // health bar
@@ -94,7 +86,7 @@ public class App
         Entity healthBar = new Entity();
         healthBar.add(new ProgressBar(100.0f, 1.0f, false));
         healthBar.add(new HUD(20, 20, 100, 5, Color.GREEN));
-        healthBar.add(health);
+        healthBar.add(survivor.get(Health.class));
         engine.addEntity(healthBar);
 
         engine.addSystem(new ZambieAttractorSystem());
