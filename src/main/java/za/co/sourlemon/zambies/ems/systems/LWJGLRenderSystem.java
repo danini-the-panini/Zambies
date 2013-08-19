@@ -13,9 +13,11 @@ import za.co.sourlemon.zambies.ems.nodes.RenderNode;
 import static za.co.sourlemon.zambies.App.*;
 import static za.co.sourlemon.zambies.Utils.*;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
+import za.co.sourlemon.zambies.ems.components.HUD;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
+import za.co.sourlemon.zambies.ems.nodes.HUDNode;
 
 /**
  *
@@ -67,7 +69,6 @@ public class LWJGLRenderSystem extends AbstractSystem
             events.keyboard.keys[KeyLWJGLtoAWT(i)] = Keyboard.isKeyDown(i);
         }
 
-        List<RenderNode> nodes = engine.getNodeList(RenderNode.class);
 
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
@@ -81,6 +82,7 @@ public class LWJGLRenderSystem extends AbstractSystem
                 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
+        List<RenderNode> nodes = engine.getNodeList(RenderNode.class);
         for (RenderNode node : nodes)
         {
             if (node.entity.has(CameraLock.class))
@@ -96,6 +98,24 @@ public class LWJGLRenderSystem extends AbstractSystem
                     (float) Math.toDegrees(p.theta),
                     p.scaleX, p.scaleY,
                     c[0], c[1], c[2]);
+        }
+
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(
+                0,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT,
+                0,
+                1, -1);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
+        List<HUDNode> hnodes = engine.getNodeList(HUDNode.class);
+        for (HUDNode node : hnodes)
+        {
+            HUD hud = node.hud;
+            float[] c = hud.color.getRGBComponents(null);
+            drawHUDQuad(hud.x, hud.y, hud.w, hud.h, c[0], c[1], c[2]);
         }
 
         Display.update();
@@ -117,6 +137,25 @@ public class LWJGLRenderSystem extends AbstractSystem
         GL11.glVertex2f(1, 1);
         GL11.glVertex2f(-1, 1);
 
+        GL11.glEnd();
+        GL11.glPopMatrix();
+    }
+
+    public void drawHUDQuad(int x, int y, int w, int h,
+            float r, float g, float b)
+    {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(x, y, 0);
+        GL11.glScalef(w, h, 1);
+        
+        GL11.glBegin(GL11.GL_QUADS);
+        
+        GL11.glColor3f(r, g, b);
+        GL11.glVertex2f(0, 0);
+        GL11.glVertex2f(1, 0);
+        GL11.glVertex2f(1, 1);
+        GL11.glVertex2f(0, 1);
+        
         GL11.glEnd();
         GL11.glPopMatrix();
     }
