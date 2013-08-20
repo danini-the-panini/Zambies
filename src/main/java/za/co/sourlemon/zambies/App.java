@@ -12,13 +12,13 @@ import za.co.sourlemon.zambies.ems.systems.ZambieAISystem;
 import za.co.sourlemon.zambies.ems.systems.HealthSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttractorSystem;
 import za.co.sourlemon.zambies.ems.systems.LifetimeSystem;
-import za.co.sourlemon.zambies.ems.systems.GunControlSystem;
+import za.co.sourlemon.zambies.ems.systems.ControlSystem;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Gun;
-import za.co.sourlemon.zambies.ems.components.GunControl;
+import za.co.sourlemon.zambies.ems.components.Control;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.KeyEvents;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
@@ -26,11 +26,13 @@ import za.co.sourlemon.zambies.ems.components.MouseEvents;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
+import za.co.sourlemon.zambies.ems.components.Usable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import za.co.sourlemon.zambies.ems.systems.BulletSystem;
+import za.co.sourlemon.zambies.ems.systems.GunSystem;
 import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttackSystem;
 
@@ -72,7 +74,8 @@ public class App
         entity.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
                 KeyEvent.VK_A, KeyEvent.VK_D, 150));
         entity.add(new MouseLook());
-        entity.add(new GunControl(MouseEvent.BUTTON1, true));
+        entity.add(new Control(MouseEvent.BUTTON1, true));
+        entity.add(new Usable());
         entity.add(new Gun(1000, 10, 0.5f, 0.1));
         entity.add(new Renderable(Color.BLUE));
         entity.add(new ZambieAttractor(1, 400, 25));
@@ -87,7 +90,8 @@ public class App
         engine.addSystem(new MotionControlSystem());
         engine.addSystem(new MotionSystem());
         engine.addSystem(new MouseControlSystem());
-        engine.addSystem(new GunControlSystem());
+        engine.addSystem(new ControlSystem());
+        engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
         engine.addSystem((ISystem)JOptionPane.showInputDialog(

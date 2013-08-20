@@ -2,16 +2,16 @@ package za.co.sourlemon.zambies.ems.nodes;
 
 import za.co.sourlemon.zambies.ems.Node;
 import za.co.sourlemon.zambies.ems.components.Gun;
-import za.co.sourlemon.zambies.ems.components.GunControl;
 import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.Usable;
 
 /**
  *
  * @author daniel
  */
-public class GunControlNode extends Node
+public class GunNode extends Node
 {
-    public GunControl gunControls;
     public Gun gun;
+    public Usable usable;
     public Position position;
 }

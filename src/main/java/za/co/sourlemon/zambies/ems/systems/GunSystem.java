@@ -14,29 +14,24 @@ import za.co.sourlemon.zambies.ems.components.Parent;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
-import za.co.sourlemon.zambies.ems.nodes.EventNode;
-import za.co.sourlemon.zambies.ems.nodes.GunControlNode;
+import za.co.sourlemon.zambies.ems.nodes.GunNode;
 
 /**
  *
  * @author daniel
  */
-public class GunControlSystem extends AbstractSystem
+public class GunSystem extends AbstractSystem
 {
 
     @Override
     public void update(double delta)
     {
-        EventNode events = engine.getNode(EventNode.class);
+        List<GunNode> nodes = engine.getNodeList(GunNode.class);
 
-        List<GunControlNode> nodes = engine.getNodeList(GunControlNode.class);
-
-        for (GunControlNode node : nodes)
+        for (GunNode node : nodes)
         {
             node.gun.timeSinceLastFire += delta;
-            if ((node.gunControls.mouse
-                    ? events.mouse.button[node.gunControls.trigger]
-                    : events.keyboard.keys[node.gunControls.trigger])
+            if (node.usable.using
                     && node.gun.timeSinceLastFire >= node.gun.fireInterval)
             {
                 node.gun.timeSinceLastFire = 0;
@@ -46,6 +41,11 @@ public class GunControlSystem extends AbstractSystem
                         node.entity);
             }
         }
+    }
+
+    @Override
+    public void end()
+    {
     }
 
     private void createBullet(float damage, float life, float x, float y, float theta, float speed, Entity parent)
@@ -62,10 +62,5 @@ public class GunControlSystem extends AbstractSystem
         entity.add(new Renderable(Color.RED));
 
         engine.addEntity(entity);
-    }
-
-    @Override
-    public void end()
-    {
     }
 }
