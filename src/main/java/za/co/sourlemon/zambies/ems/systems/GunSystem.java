@@ -9,6 +9,7 @@ import za.co.sourlemon.zambies.Utils;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.components.Bullet;
+import za.co.sourlemon.zambies.ems.components.Gun;
 import za.co.sourlemon.zambies.ems.components.Lifetime;
 import za.co.sourlemon.zambies.ems.components.Parent;
 import za.co.sourlemon.zambies.ems.components.Position;
@@ -35,32 +36,36 @@ public class GunSystem extends AbstractSystem
                     && node.gun.timeSinceLastFire >= node.gun.fireInterval)
             {
                 node.gun.timeSinceLastFire = 0;
-                createBullet(node.gun.damage, node.gun.lifetime,
-                        node.position.x, node.position.y,
-                        node.position.theta, node.gun.speed,
-                        node.entity);
+                createBullet(node.gun, node.position, node.entity);
             }
         }
     }
 
+<<<<<<< HEAD:src/main/java/za/co/sourlemon/zambies/ems/systems/GunSystem.java
     @Override
     public void end()
     {
     }
 
     private void createBullet(float damage, float life, float x, float y, float theta, float speed, Entity parent)
+=======
+    private void createBullet(Gun gun, Position pos, Entity parent)
+>>>>>>> master:src/main/java/za/co/sourlemon/zambies/ems/systems/GunControlSystem.java
     {
-        Entity entity = new Entity();
+        for (int i = 0; i < gun.numberOfBullets; i++)
+        {
+            Entity entity = new Entity();
 
-        theta += (float) (Utils.random.nextGaussian() * PI / 64f);
+            float theta = pos.theta + (float) (Utils.random.nextGaussian() * gun.scatter);
 
-        entity.add(new Bullet(damage));
-        entity.add(new Lifetime(life));
-        entity.add(new Position(x, y, theta, 5, 1));
-        entity.add(new Velocity((float) cos(theta) * speed, (float) sin(theta) * speed, 0));
-        entity.add(new Parent(parent));
-        entity.add(new Renderable(Color.RED));
+            entity.add(new Bullet(gun.damage));
+            entity.add(new Lifetime(gun.lifetime));
+            entity.add(new Position(pos.x, pos.y, theta, 5, 1));
+            entity.add(new Velocity((float) cos(theta) * gun.speed, (float) sin(theta) * gun.speed, 0));
+            entity.add(new Parent(parent));
+            entity.add(new Renderable(Color.RED));
 
-        engine.addEntity(entity);
+            engine.addEntity(entity);
+        }
     }
 }

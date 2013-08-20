@@ -19,6 +19,7 @@ import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Gun;
 import za.co.sourlemon.zambies.ems.components.Control;
+import za.co.sourlemon.zambies.ems.components.HUD;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.KeyEvents;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
@@ -26,16 +27,19 @@ import za.co.sourlemon.zambies.ems.components.MouseEvents;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.PrimaryEquipment;
+import za.co.sourlemon.zambies.ems.components.ProgressBar;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Usable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
+import za.co.sourlemon.zambies.ems.nodes.HealthBarSystem;
 import za.co.sourlemon.zambies.ems.systems.BulletSystem;
 import za.co.sourlemon.zambies.ems.systems.GunSystem;
 import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
 import za.co.sourlemon.zambies.ems.systems.PrimaryEquipmentService;
+import za.co.sourlemon.zambies.ems.systems.ProgressBarSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttackSystem;
 
 /**
@@ -55,46 +59,58 @@ public class App
      */
     public static void main(String[] args)
     {
-        ISystem[] renderSystems = new ISystem[]{
+        ISystem[] renderSystems = new ISystem[]
+        {
             new AWTRenderSystem(),
             new LWJGLRenderSystem()
         };
-        
+
         final Engine engine = new Engine();
 
         // create event node
-        Entity entity = new Entity();
-        entity.add(new WindowEvents());
-        entity.add(new KeyEvents());
-        entity.add(new MouseEvents());
-        engine.addEntity(entity);
-        
+        Entity eventEntity = new Entity();
+        eventEntity.add(new WindowEvents());
+        eventEntity.add(new KeyEvents());
+        eventEntity.add(new MouseEvents());
+        engine.addEntity(eventEntity);
+
         // create survivor
         Position position = new Position(0, 0, 0, 6, 6);
         
-        entity = new Entity();
+        Entity survivor = new Entity();
         
-        entity.add(position);
-        entity.add(new Velocity(0, 0, 0));
-        entity.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
+        survivor.add(position);
+        survivor.add(new Velocity(0, 0, 0));
+        survivor.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
                 KeyEvent.VK_A, KeyEvent.VK_D, 150));
-        entity.add(new MouseLook());
-        entity.add(new Control(MouseEvent.BUTTON1, true));
+        survivor.add(new MouseLook());
+        survivor.add(new Control(MouseEvent.BUTTON1, true));
         
         Entity gunEntity = new Entity();
         gunEntity.add(new Usable());
-        gunEntity.add(new Gun(1000, 10, 0.5f, 0.1));
+        gunEntity.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float)Math.PI/64.0f));
         gunEntity.add(position);
         engine.addEntity(gunEntity);
         
-        entity.add(new PrimaryEquipment(gunEntity));
-        entity.add(new Usable());
-        entity.add(new Renderable(Color.BLUE));
-        entity.add(new ZambieAttractor(1, 400, 25));
-        entity.add(new CameraLock());
-        entity.add(new Health(100));
-        engine.addEntity(entity);
-        
+        survivor.add(new PrimaryEquipment(gunEntity));
+        survivor.add(new Usable());
+        survivor.add(new Renderable(Color.BLUE));
+        survivor.add(new ZambieAttractor(1, 400, 25));
+        survivor.add(new CameraLock());
+        Health health = new Health(100);
+        survivor.add(health);
+        engine.addEntity(survivor);
+
+        // health bar
+        Entity healthBarBG = new Entity();
+        healthBarBG.add(new HUD(20, 20, 100, 5, Color.RED));
+        engine.addEntity(healthBarBG);
+
+        Entity healthBar = new Entity();
+        healthBar.add(new ProgressBar(100.0f, 1.0f, false));
+        healthBar.add(new HUD(20, 20, 100, 5, Color.GREEN));
+        healthBar.add(health);
+        engine.addEntity(healthBar);
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new ZambieAttackSystem());
@@ -107,7 +123,9 @@ public class App
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
-        engine.addSystem((ISystem)JOptionPane.showInputDialog(
+        engine.addSystem(new HealthBarSystem());
+        engine.addSystem(new ProgressBarSystem());
+        engine.addSystem((ISystem) JOptionPane.showInputDialog(
                 null, "Select Rendering System", "Render System",
                 JOptionPane.QUESTION_MESSAGE, null, renderSystems,
                 renderSystems[0]));
