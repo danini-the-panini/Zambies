@@ -25,6 +25,7 @@ import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.MouseEvents;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
 import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.PrimaryEquipment;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Usable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
@@ -34,6 +35,7 @@ import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import za.co.sourlemon.zambies.ems.systems.BulletSystem;
 import za.co.sourlemon.zambies.ems.systems.GunSystem;
 import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
+import za.co.sourlemon.zambies.ems.systems.PrimaryEquipmentService;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttackSystem;
 
 /**
@@ -68,15 +70,25 @@ public class App
         engine.addEntity(entity);
         
         // create survivor
+        Position position = new Position(0, 0, 0, 6, 6);
+        
         entity = new Entity();
-        entity.add(new Position(0, 0, 0, 6, 6));
+        
+        entity.add(position);
         entity.add(new Velocity(0, 0, 0));
         entity.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
                 KeyEvent.VK_A, KeyEvent.VK_D, 150));
         entity.add(new MouseLook());
         entity.add(new Control(MouseEvent.BUTTON1, true));
+        
+        Entity gunEntity = new Entity();
+        gunEntity.add(new Usable());
+        gunEntity.add(new Gun(1000, 10, 0.5f, 0.1));
+        gunEntity.add(position);
+        engine.addEntity(gunEntity);
+        
+        entity.add(new PrimaryEquipment(gunEntity));
         entity.add(new Usable());
-        entity.add(new Gun(1000, 10, 0.5f, 0.1));
         entity.add(new Renderable(Color.BLUE));
         entity.add(new ZambieAttractor(1, 400, 25));
         entity.add(new CameraLock());
@@ -91,6 +103,7 @@ public class App
         engine.addSystem(new MotionSystem());
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new ControlSystem());
+        engine.addSystem(new PrimaryEquipmentService());
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
