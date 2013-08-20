@@ -1,7 +1,6 @@
 package za.co.sourlemon.zambies.ems.systems;
 
 import java.awt.Color;
-import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.List;
@@ -41,16 +40,12 @@ public class GunSystem extends AbstractSystem
         }
     }
 
-<<<<<<< HEAD:src/main/java/za/co/sourlemon/zambies/ems/systems/GunSystem.java
     @Override
     public void end()
     {
     }
 
-    private void createBullet(float damage, float life, float x, float y, float theta, float speed, Entity parent)
-=======
     private void createBullet(Gun gun, Position pos, Entity parent)
->>>>>>> master:src/main/java/za/co/sourlemon/zambies/ems/systems/GunControlSystem.java
     {
         for (int i = 0; i < gun.numberOfBullets; i++)
         {
