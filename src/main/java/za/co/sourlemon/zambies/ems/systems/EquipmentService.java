@@ -4,21 +4,21 @@ import java.util.List;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Usable;
-import za.co.sourlemon.zambies.ems.nodes.PrimaryEquipmentNode;
+import za.co.sourlemon.zambies.ems.nodes.EquipSlotNode;
 
 /**
  *
  * @author daniel
  */
-public class PrimaryEquipmentService extends AbstractSystem
+public class EquipmentService extends AbstractSystem
 {
 
     @Override
     public void update(double delta)
     {
-        List<PrimaryEquipmentNode> nodes = engine.getNodeList(PrimaryEquipmentNode.class);
+        List<EquipSlotNode> nodes = engine.getNodeList(EquipSlotNode.class);
 
-        for (PrimaryEquipmentNode node : nodes)
+        for (EquipSlotNode node : nodes)
         {
             Usable equipmentUsable = node.equipment.equipped.get(Usable.class);
             if (equipmentUsable == null)

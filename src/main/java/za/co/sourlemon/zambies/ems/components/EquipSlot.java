@@ -6,12 +6,12 @@ import za.co.sourlemon.zambies.ems.Entity;
  *
  * @author daniel
  */
-public class PrimaryEquipment
+public class EquipSlot
 {
 
     public Entity equipped;
 
-    public PrimaryEquipment(Entity equipped)
+    public EquipSlot(Entity equipped)
     {
         this.equipped = equipped;
     }

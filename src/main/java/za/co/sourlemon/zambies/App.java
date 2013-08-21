@@ -28,7 +28,7 @@ import za.co.sourlemon.zambies.ems.components.MouseLook;
 import za.co.sourlemon.zambies.ems.components.Offset;
 import za.co.sourlemon.zambies.ems.components.Parent;
 import za.co.sourlemon.zambies.ems.components.Position;
-import za.co.sourlemon.zambies.ems.components.PrimaryEquipment;
+import za.co.sourlemon.zambies.ems.components.EquipSlot;
 import za.co.sourlemon.zambies.ems.components.ProgressBar;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Usable;
@@ -41,7 +41,7 @@ import za.co.sourlemon.zambies.ems.systems.BulletSystem;
 import za.co.sourlemon.zambies.ems.systems.GunSystem;
 import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
 import za.co.sourlemon.zambies.ems.systems.OffsetSystem;
-import za.co.sourlemon.zambies.ems.systems.PrimaryEquipmentService;
+import za.co.sourlemon.zambies.ems.systems.EquipmentService;
 import za.co.sourlemon.zambies.ems.systems.ProgressBarSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttackSystem;
 
@@ -86,7 +86,6 @@ public class App
         survivor.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
                 KeyEvent.VK_A, KeyEvent.VK_D, 150));
         survivor.add(new MouseLook());
-        survivor.add(new Control(MouseEvent.BUTTON1, true));
         
         Entity gunEntity = new Entity();
         gunEntity.add(new Usable());
@@ -97,8 +96,12 @@ public class App
         gunEntity.add(new Renderable(Color.DARK_GRAY));
         engine.addEntity(gunEntity);
         
-        survivor.add(new PrimaryEquipment(gunEntity));
-        survivor.add(new Usable());
+        Entity primarySlot = new Entity();
+        primarySlot.add(new EquipSlot(gunEntity));
+        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
+        primarySlot.add(new Usable());
+        engine.addEntity(primarySlot);
+        
         survivor.add(new Renderable(Color.BLUE));
         survivor.add(new ZambieAttractor(1, 400, 25));
         survivor.add(new CameraLock());
@@ -125,7 +128,7 @@ public class App
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new OffsetSystem());
         engine.addSystem(new ControlSystem());
-        engine.addSystem(new PrimaryEquipmentService());
+        engine.addSystem(new EquipmentService());
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
