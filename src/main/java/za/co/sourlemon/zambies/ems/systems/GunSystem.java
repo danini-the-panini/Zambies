@@ -1,7 +1,6 @@
 package za.co.sourlemon.zambies.ems.systems;
 
 import java.awt.Color;
-import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.List;
@@ -15,35 +14,35 @@ import za.co.sourlemon.zambies.ems.components.Parent;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
-import za.co.sourlemon.zambies.ems.nodes.EventNode;
-import za.co.sourlemon.zambies.ems.nodes.GunControlNode;
+import za.co.sourlemon.zambies.ems.nodes.GunNode;
 
 /**
  *
  * @author daniel
  */
-public class GunControlSystem extends AbstractSystem
+public class GunSystem extends AbstractSystem
 {
 
     @Override
     public void update(double delta)
     {
-        EventNode events = engine.getNode(EventNode.class);
+        List<GunNode> nodes = engine.getNodeList(GunNode.class);
 
-        List<GunControlNode> nodes = engine.getNodeList(GunControlNode.class);
-
-        for (GunControlNode node : nodes)
+        for (GunNode node : nodes)
         {
             node.gun.timeSinceLastFire += delta;
-            if ((node.gunControls.mouse
-                    ? events.mouse.button[node.gunControls.trigger]
-                    : events.keyboard.keys[node.gunControls.trigger])
+            if (node.usable.using
                     && node.gun.timeSinceLastFire >= node.gun.fireInterval)
             {
                 node.gun.timeSinceLastFire = 0;
                 createBullet(node.gun, node.position, node.entity);
             }
         }
+    }
+
+    @Override
+    public void end()
+    {
     }
 
     private void createBullet(Gun gun, Position pos, Entity parent)
@@ -63,10 +62,5 @@ public class GunControlSystem extends AbstractSystem
 
             engine.addEntity(entity);
         }
-    }
-
-    @Override
-    public void end()
-    {
     }
 }

@@ -12,22 +12,26 @@ import za.co.sourlemon.zambies.ems.systems.ZambieAISystem;
 import za.co.sourlemon.zambies.ems.systems.HealthSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttractorSystem;
 import za.co.sourlemon.zambies.ems.systems.LifetimeSystem;
-import za.co.sourlemon.zambies.ems.systems.GunControlSystem;
+import za.co.sourlemon.zambies.ems.systems.ControlSystem;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Gun;
-import za.co.sourlemon.zambies.ems.components.GunControl;
+import za.co.sourlemon.zambies.ems.components.Control;
 import za.co.sourlemon.zambies.ems.components.HUD;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.KeyEvents;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.MouseEvents;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
+import za.co.sourlemon.zambies.ems.components.Offset;
+import za.co.sourlemon.zambies.ems.components.Parent;
 import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.EquipSlot;
 import za.co.sourlemon.zambies.ems.components.ProgressBar;
 import za.co.sourlemon.zambies.ems.components.Renderable;
+import za.co.sourlemon.zambies.ems.components.Usable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
@@ -36,7 +40,10 @@ import za.co.sourlemon.zambies.ems.factories.SurvivorFactoryRequest;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import za.co.sourlemon.zambies.ems.nodes.HealthBarSystem;
 import za.co.sourlemon.zambies.ems.systems.BulletSystem;
+import za.co.sourlemon.zambies.ems.systems.GunSystem;
 import za.co.sourlemon.zambies.ems.systems.LWJGLRenderSystem;
+import za.co.sourlemon.zambies.ems.systems.OffsetSystem;
+import za.co.sourlemon.zambies.ems.systems.EquipmentService;
 import za.co.sourlemon.zambies.ems.systems.ProgressBarSystem;
 import za.co.sourlemon.zambies.ems.systems.ZambieAttackSystem;
 
@@ -76,7 +83,24 @@ public class App
         SurvivorFactory survivorFactory = new SurvivorFactory();
         Entity survivor = survivorFactory.create(new SurvivorFactoryRequest(0, 0));
         survivor.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float) Math.PI / 64.0f));
+        
+        Health health = survivor.get(Health.class);
         engine.addEntity(survivor);
+        
+        Entity gunEntity = new Entity();
+        gunEntity.add(new Usable());
+        gunEntity.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float)Math.PI/64.0f));
+        gunEntity.add(new Parent(survivor));
+        gunEntity.add(new Offset(2, -8, 0));
+        gunEntity.add(new Position(0, 0, 0, 6, 2));
+        gunEntity.add(new Renderable(Color.DARK_GRAY));
+        engine.addEntity(gunEntity);
+        
+        Entity primarySlot = new Entity();
+        primarySlot.add(new EquipSlot(gunEntity));
+        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
+        primarySlot.add(new Usable());
+        engine.addEntity(primarySlot);
 
         // health bar
         Entity healthBarBG = new Entity();
@@ -88,7 +112,6 @@ public class App
         healthBar.add(new HUD(20, 20, 100, 5, Color.GREEN));
         healthBar.add(survivor.get(Health.class));
         engine.addEntity(healthBar);
-
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new ZambieAttackSystem());
@@ -96,7 +119,10 @@ public class App
         engine.addSystem(new MotionControlSystem());
         engine.addSystem(new MotionSystem());
         engine.addSystem(new MouseControlSystem());
-        engine.addSystem(new GunControlSystem());
+        engine.addSystem(new OffsetSystem());
+        engine.addSystem(new ControlSystem());
+        engine.addSystem(new EquipmentService());
+        engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
         engine.addSystem(new HealthBarSystem());
