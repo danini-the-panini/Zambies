@@ -50,13 +50,15 @@ public class GunSystem extends AbstractSystem
         for (int i = 0; i < gun.numberOfBullets; i++)
         {
             Entity entity = new Entity();
+            
+            float speed = gun.speed * (1.0f + (float)Utils.random.nextGaussian() * 0.05f);
 
             float theta = pos.theta + (float) (Utils.random.nextGaussian() * gun.scatter);
 
             entity.add(new Bullet(gun.damage));
             entity.add(new Lifetime(gun.lifetime));
             entity.add(new Position(pos.x, pos.y, theta, 5, 1));
-            entity.add(new Velocity((float) cos(theta) * gun.speed, (float) sin(theta) * gun.speed, 0));
+            entity.add(new Velocity((float) cos(theta) * speed, (float) sin(theta) * speed, 0));
             entity.add(new Parent(parent));
             entity.add(new Renderable(Color.RED));
 
