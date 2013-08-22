@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
-import za.co.sourlemon.zambies.ems.components.Gun;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
