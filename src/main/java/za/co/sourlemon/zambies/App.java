@@ -23,6 +23,10 @@ public class App
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 600;
     public static final String WINDOW_TITLE = "Zambies!";
+    public static final GunFactoryRequest SUBMACHINE_GUN = new GunFactoryRequest(1000, 10,
+            0.5f, 0.1, 1, (float)Math.PI/64.0f, 2, -8, 6, 2, Color.DARK_GRAY);
+    public static final GunFactoryRequest SHOTGUN = new GunFactoryRequest(1000, 10,
+            0.5f, 0.7, 7, (float)Math.PI/32f, 2, -8, 6, 2, Color.DARK_GRAY);
 
     /**
      * @param args the command line arguments
@@ -47,13 +51,11 @@ public class App
         // create survivor
         SurvivorFactory survivorFactory = new SurvivorFactory();
         Entity survivor = survivorFactory.create(new SurvivorFactoryRequest(0, 0));
-        survivor.add(new Gun(1000, 10, 0.5f, 0.1, 1, (float) Math.PI / 64.0f));
         engine.addEntity(survivor);
         
         // create gun
         GunFactory gunFactory = new GunFactory();
-        Entity gunEntity = gunFactory.create(new GunFactoryRequest(1000, 10,
-                0.5f, 0.1, 1, (float)Math.PI/64.0f, 2, -8, 6, 2, Color.DARK_GRAY));
+        Entity gunEntity = gunFactory.create(SHOTGUN);
         engine.addEntity(gunEntity);
         
         // create equipment slot
