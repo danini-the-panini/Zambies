@@ -7,7 +7,6 @@ import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Gun;
-import za.co.sourlemon.zambies.ems.components.GunControl;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
@@ -33,7 +32,6 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         entity.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
                 KeyEvent.VK_A, KeyEvent.VK_D, 150));
         entity.add(new MouseLook());
-        entity.add(new GunControl(MouseEvent.BUTTON1, true));
         entity.add(new Renderable(Color.BLUE));
         entity.add(new ZambieAttractor(1, 400, 25));
         entity.add(new CameraLock());
