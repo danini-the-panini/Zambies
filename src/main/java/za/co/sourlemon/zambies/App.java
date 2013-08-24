@@ -62,10 +62,11 @@ public class App
         Entity primarySlot = new Entity();
         primarySlot.add(new Control(MouseEvent.BUTTON1, true));
         primarySlot.add(new Usable());
+        survivor.getDependents().add(primarySlot);
         engine.addEntity(primarySlot);
         
         // "equip" gun
-        gunEntity.add(new Association(survivor));
+        survivor.associate(gunEntity);
         primarySlot.add(new EquipSlot(gunEntity));
 
         // health bar

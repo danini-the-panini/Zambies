@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import za.co.sourlemon.zambies.ems.components.Association;
 
 /**
  *
@@ -15,6 +16,7 @@ public class Entity
     Collection<EntityListener> listeners = new ArrayList<>();
     Map<Class, Object> components = new HashMap<>();
     Collection<Entity> dependents = new ArrayList<>();
+    Collection<Entity> associates = new ArrayList<>();
 
     public void addEntityListener(EntityListener l)
     {
@@ -46,17 +48,27 @@ public class Entity
             l.componentRemoved(this, componentClass);
         }
     }
-
-    public void addDependent(Entity dep)
+    
+    public void associate(Entity other)
     {
-        dependents.add(dep);
+        associates.add(other);
+        other.add(new Association(this));
+    }
+    
+    public void unassociate()
+    {
+        for (Entity assoc : associates)
+        {
+            assoc.remove(Association.class);
+        }
+        associates.clear();
     }
 
-    public void removeDependent(Entity dep)
+    public Collection<Entity> getAssociates()
     {
-        dependents.remove(dep);
+        return associates;
     }
-
+    
     public Collection<Entity> getDependents()
     {
         return dependents;

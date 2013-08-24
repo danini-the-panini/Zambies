@@ -76,6 +76,7 @@ public class Engine implements EntityListener
         {
             removeEntity(dep);
         }
+        entity.unassociate();
     }
 
     @Override
