@@ -65,7 +65,7 @@ public class App
         engine.addEntity(primarySlot);
         
         // "equip" gun
-        gunEntity.add(new Parent(survivor));
+        gunEntity.add(new Association(survivor));
         primarySlot.add(new EquipSlot(gunEntity));
 
         // health bar

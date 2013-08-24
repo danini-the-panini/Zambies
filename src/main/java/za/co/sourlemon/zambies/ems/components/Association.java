@@ -6,12 +6,12 @@ import za.co.sourlemon.zambies.ems.Entity;
  *
  * @author Daniel
  */
-public class Parent
+public class Association
 {
 
     public Entity entity;
 
-    public Parent(Entity entity)
+    public Association(Entity entity)
     {
         this.entity = entity;
     }
