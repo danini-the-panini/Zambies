@@ -36,6 +36,9 @@ public class GunSystem extends AbstractSystem
             {
                 node.gun.timeSinceLastFire = 0;
                 createBullet(node.gun, node.position, node.entity);
+
+                // to stop glitch where gun doesn't stop firing
+                node.usable.using = false;
             }
         }
     }
@@ -50,8 +53,8 @@ public class GunSystem extends AbstractSystem
         for (int i = 0; i < gun.numberOfBullets; i++)
         {
             Entity entity = new Entity();
-            
-            float speed = gun.speed * (1.0f + (float)Utils.random.nextGaussian() * 0.05f);
+
+            float speed = gun.speed * (1.0f + (float) Utils.random.nextGaussian() * 0.05f);
 
             float theta = pos.theta + (float) (Utils.random.nextGaussian() * gun.scatter);
 
