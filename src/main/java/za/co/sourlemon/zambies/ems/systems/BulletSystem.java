@@ -5,6 +5,7 @@ import static za.co.sourlemon.zambies.Utils.dot;
 import static za.co.sourlemon.zambies.Utils.lengthSq;
 import static za.co.sourlemon.zambies.Utils.normal;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
+import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.components.Parent;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.nodes.BulletNode;
@@ -32,13 +33,18 @@ public class BulletSystem extends AbstractSystem
             // normalized vector along bullet trajectory
             float[] nbp = normal(bp.x - bp.px, bp.y - bp.py); // <- V (normalized)
 
+            hnodeloop:
             for (HealthNode node : nodes)
             {
                 // prevent survivors from shooting themselves
                 Parent parent = bullet.entity.get(Parent.class);
-                if (parent != null && parent.entity == node.entity)
+                while (parent != null)
                 {
-                    continue;
+                    if (parent.entity == node.entity)
+                    {
+                        continue hnodeloop;
+                    }
+                    parent = parent.entity.get(Parent.class);
                 }
 
                 // position of "stationary" entity (e.g. zambie)
