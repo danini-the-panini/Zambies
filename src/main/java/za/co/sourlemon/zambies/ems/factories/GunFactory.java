@@ -1,6 +1,5 @@
 package za.co.sourlemon.zambies.ems.factories;
 
-import java.awt.Color;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.Gun;
@@ -23,8 +22,8 @@ public class GunFactory implements Factory<GunFactoryRequest>
         entity.add(new Usable());
         entity.add(new Gun(request.speed, request.damage, request.lifetime,
                 request.fireInterval, request.numberOfBullets, request.scatter));
-        entity.add(new Offset(request.x, request.y, 0));
-        entity.add(new Position(0, 0, 0, request.scaleX, request.scaleY));
+        entity.add(new Offset(request.offsetX, request.offsetY, 0));
+        entity.add(new Position(request.x, request.y, 0, request.scaleX, request.scaleY));
         entity.add(new Renderable(request.color));
         
         return entity;
