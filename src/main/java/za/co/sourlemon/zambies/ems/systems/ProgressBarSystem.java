@@ -18,7 +18,9 @@ public class ProgressBarSystem extends AbstractSystem
 
         for (ProgressBarNode node : nodes)
         {
-            int progress = Math.round(node.bar.length * node.bar.done);
+            float percent = node.bar.value.get().floatValue()
+                    / node.bar.max.get().floatValue();
+            int progress = Math.round(node.bar.length * percent);
 
             if (node.bar.vertical)
             {

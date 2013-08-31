@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 import za.co.sourlemon.zambies.ems.components.*;
 import za.co.sourlemon.zambies.ems.factories.*;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
-import za.co.sourlemon.zambies.ems.nodes.HealthBarSystem;
 import za.co.sourlemon.zambies.ems.systems.*;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.Value;
 
 /**
  *
@@ -24,9 +24,9 @@ public class App
     public static final int SCREEN_HEIGHT = 600;
     public static final String WINDOW_TITLE = "Zambies!";
     public static final GunFactoryRequest SUBMACHINE_GUN = new GunFactoryRequest(1000, 10,
-            0.5f, 0.1, 1, (float)Math.PI/64.0f, 2, -8, 6, 2, Color.DARK_GRAY);
+            0.5f, 0.1, 1, (float) Math.PI / 64.0f, 2, -8, 6, 2, Color.DARK_GRAY);
     public static final GunFactoryRequest SHOTGUN = new GunFactoryRequest(1000, 10,
-            0.5f, 0.7, 7, (float)Math.PI/32f, 2, -8, 6, 2, Color.DARK_GRAY);
+            0.5f, 0.7, 7, (float) Math.PI / 32f, 2, -8, 6, 2, Color.DARK_GRAY);
 
     /**
      * @param args the command line arguments
@@ -52,19 +52,19 @@ public class App
         SurvivorFactory survivorFactory = new SurvivorFactory();
         Entity survivor = survivorFactory.create(new SurvivorFactoryRequest(0, 0));
         engine.addEntity(survivor);
-        
+
         // create gun
         GunFactory gunFactory = new GunFactory();
         Entity gunEntity = gunFactory.create(SHOTGUN);
         engine.addEntity(gunEntity);
-        
+
         // create equipment slot
         Entity primarySlot = new Entity();
         primarySlot.add(new Control(MouseEvent.BUTTON1, true));
         primarySlot.add(new Usable());
         survivor.getDependents().add(primarySlot);
         engine.addEntity(primarySlot);
-        
+
         // "equip" gun
         survivor.associate(gunEntity);
         primarySlot.add(new EquipSlot(gunEntity));
@@ -75,10 +75,12 @@ public class App
         engine.addEntity(healthBarBG);
 
         Entity healthBar = new Entity();
-        healthBar.add(new ProgressBar(100.0f, 1.0f, false));
+        Health health = survivor.get(Health.class);
+        healthBar.add(new ProgressBar(new Value<Float>("maxHp", health),
+                new Value<Float>("hp", health), 100, false));
         healthBar.add(new HUD(20, 20, 100, 5, Color.GREEN));
-        healthBar.add(survivor.get(Health.class));
         engine.addEntity(healthBar);
+
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new ZambieAttackSystem());
@@ -92,7 +94,6 @@ public class App
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
-        engine.addSystem(new HealthBarSystem());
         engine.addSystem(new ProgressBarSystem());
         engine.addSystem((ISystem) JOptionPane.showInputDialog(
                 null, "Select Rendering System", "Render System",
