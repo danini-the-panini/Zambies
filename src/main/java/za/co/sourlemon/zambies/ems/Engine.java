@@ -47,6 +47,10 @@ public class Engine implements EntityListener
         {
             family.newEntity(entity);
         }
+        for (Entity dep : entity.getDependents())
+        {
+            addEntity(dep);
+        }
     }
 
     /**
@@ -76,7 +80,7 @@ public class Engine implements EntityListener
         {
             removeEntity(dep);
         }
-        entity.unassociate();
+        entity.unassociateAll();
     }
 
     @Override

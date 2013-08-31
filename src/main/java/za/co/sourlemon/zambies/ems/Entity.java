@@ -48,14 +48,24 @@ public class Entity
             l.componentRemoved(this, componentClass);
         }
     }
-    
+
     public void associate(Entity other)
     {
         associates.add(other);
         other.add(new Association(this));
     }
-    
-    public void unassociate()
+
+    public void unassociate(Entity other)
+    {
+        if (!associates.contains(other))
+        {
+            return;
+        }
+        other.remove(Association.class);
+        associates.remove(other);
+    }
+
+    public void unassociateAll()
     {
         for (Entity assoc : associates)
         {
@@ -68,7 +78,7 @@ public class Entity
     {
         return associates;
     }
-    
+
     public Collection<Entity> getDependents()
     {
         return dependents;

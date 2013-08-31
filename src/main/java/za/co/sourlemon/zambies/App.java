@@ -58,19 +58,14 @@ public class App
         engine.addEntity(gunEntity);
         
         Entity shotgunEntity = gunFactory.create(SHOTGUN.atPosition(200, 200));
+        shotgunEntity.add(new Pickup());
         engine.addEntity(shotgunEntity);
-
-        // create equipment slot
-        Entity primarySlot = new Entity();
-        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
-        primarySlot.add(new Usable());
-        survivor.getDependents().add(primarySlot);
-        engine.addEntity(primarySlot);
         
         engine.addEntity(survivor);
 
         // "equip" gun
         survivor.associate(gunEntity);
+        Entity primarySlot = survivor.get(EquipControl.class).slot;
         primarySlot.add(new EquipSlot(gunEntity));
 
         // health bar
@@ -94,6 +89,7 @@ public class App
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new OffsetSystem());
         engine.addSystem(new ControlSystem());
+        engine.addSystem(new PickupSystem());
         engine.addSystem(new EquipmentService());
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());

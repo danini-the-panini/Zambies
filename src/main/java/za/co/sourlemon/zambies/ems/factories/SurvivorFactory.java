@@ -6,11 +6,14 @@ import java.awt.event.MouseEvent;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
+import za.co.sourlemon.zambies.ems.components.Control;
+import za.co.sourlemon.zambies.ems.components.EquipControl;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
+import za.co.sourlemon.zambies.ems.components.Usable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
 import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
 
@@ -35,6 +38,14 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         entity.add(new ZambieAttractor(1, 400, 25));
         entity.add(new CameraLock());
         entity.add(new Health(100));
+        
+        // create equipment slot
+        Entity primarySlot = new Entity();
+        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
+        primarySlot.add(new Usable());
+        entity.getDependents().add(primarySlot);
+        
+        entity.add(new EquipControl(KeyEvent.VK_E, primarySlot));
         
         return entity;
     }
