@@ -35,10 +35,10 @@ public class App
     {
         ISystem[] renderSystems = new ISystem[]
         {
+
             new AWTRenderSystem(),
             new LWJGLRenderSystem()
         };
-
         final Engine engine = new Engine();
 
         // create event node
@@ -86,7 +86,7 @@ public class App
         engine.addSystem(new LifetimeSystem());
         engine.addSystem(new MotionControlSystem());
         engine.addSystem(new MotionSystem());
-        engine.addSystem(new MouseControlSystem());
+        engine.addSystem(new NoMouseControlSystem());
         engine.addSystem(new OffsetSystem());
         engine.addSystem(new ControlSystem());
         engine.addSystem(new PickupSystem());
