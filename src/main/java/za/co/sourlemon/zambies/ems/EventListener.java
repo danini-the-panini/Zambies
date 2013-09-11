@@ -4,7 +4,7 @@ package za.co.sourlemon.zambies.ems;
  *
  * @author Daniel
  */
-public interface EventListener<E extends Event>
+public interface EventListener
 {
-    public void event(E e);
+    public void eventFired(Event event);
 }

@@ -6,7 +6,7 @@ package za.co.sourlemon.zambies.ems;
  */
 public interface EventManager
 {
-    public <E extends Event> void addEventListener(Class<E> eventClass, EventListener<E> l);
+    public void fireEvent(Event event);
     
-    public <E extends Event> void fireEvent(E event);
+    public void listen(Event example, EventListener callback);
 }
