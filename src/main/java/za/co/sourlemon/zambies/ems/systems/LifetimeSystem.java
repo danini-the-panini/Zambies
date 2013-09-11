@@ -21,7 +21,7 @@ public class LifetimeSystem extends AbstractSystem
             node.life.value -= delta;
             if (node.life.value <= 0)
             {
-                engine.removeEntity(node.entity);
+                engine.removeEntity(node.getEntity());
             }
         }
     }

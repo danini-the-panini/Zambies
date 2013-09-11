@@ -21,7 +21,7 @@ public class HealthSystem extends AbstractSystem
             if (node.life.hp <= 0)
             {
                 node.life.hp = 0;
-                engine.removeEntity(node.entity);
+                engine.removeEntity(node.getEntity());
             }
         }
     }

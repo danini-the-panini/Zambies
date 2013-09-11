@@ -49,16 +49,16 @@ public class PickupSystem extends AbstractSystem
                     if (slot != null)
                     {
                         // unassociate
-                        enode.entity.unassociate(slot.equipped);
+                        enode.getEntity().unassociate(slot.equipped);
                         Usable u = slot.equipped.get(Usable.class);
                         slot.equipped.add(new Pickup());
                         
                         // make sure guns triggers don't get stuck
                         if (u != null) u.using = false;
                     }
-                    pnode.entity.remove(Pickup.class);
-                    enode.entity.associate(pnode.entity);
-                    slot.equipped = pnode.entity;
+                    pnode.getEntity().remove(Pickup.class);
+                    enode.getEntity().associate(pnode.getEntity());
+                    slot.equipped = pnode.getEntity();
                 }
             }
         }
