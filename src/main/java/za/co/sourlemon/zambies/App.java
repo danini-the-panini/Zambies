@@ -1,7 +1,6 @@
 package za.co.sourlemon.zambies;
 
 import java.awt.Color;
-import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import za.co.sourlemon.zambies.ems.components.*;
 import za.co.sourlemon.zambies.ems.factories.*;
@@ -86,7 +85,7 @@ public class App
         engine.addSystem(new LifetimeSystem());
         engine.addSystem(new MotionControlSystem());
         engine.addSystem(new MotionSystem());
-        engine.addSystem(new NoMouseControlSystem());
+        engine.addSystem(new MouseControlSystem());
         engine.addSystem(new OffsetSystem());
         engine.addSystem(new ControlSystem());
         engine.addSystem(new PickupSystem());

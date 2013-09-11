@@ -41,8 +41,8 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         
         // create equipment slot
         Entity primarySlot = new Entity();
-        //primarySlot.add(new Control(MouseEvent.BUTTON1, true));
-        primarySlot.add(new Control(KeyEvent.VK_SPACE, false));
+        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
+        //primarySlot.add(new Control(KeyEvent.VK_SPACE, false));
         primarySlot.add(new Usable());
         entity.getDependents().add(primarySlot);
         
