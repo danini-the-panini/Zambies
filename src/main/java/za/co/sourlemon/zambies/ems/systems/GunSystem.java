@@ -10,7 +10,7 @@ import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.components.Bullet;
 import za.co.sourlemon.zambies.ems.components.Gun;
 import za.co.sourlemon.zambies.ems.components.Lifetime;
-import za.co.sourlemon.zambies.ems.components.Parent;
+import za.co.sourlemon.zambies.ems.components.Association;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Velocity;
@@ -36,6 +36,9 @@ public class GunSystem extends AbstractSystem
             {
                 node.gun.timeSinceLastFire = 0;
                 createBullet(node.gun, node.position, node.entity);
+
+                // to stop glitch where gun doesn't stop firing
+                node.usable.using = false;
             }
         }
     }
@@ -50,8 +53,8 @@ public class GunSystem extends AbstractSystem
         for (int i = 0; i < gun.numberOfBullets; i++)
         {
             Entity entity = new Entity();
-            
-            float speed = gun.speed * (1.0f + (float)Utils.random.nextGaussian() * 0.05f);
+
+            float speed = gun.speed * (1.0f + (float) Utils.random.nextGaussian() * 0.05f);
 
             float theta = pos.theta + (float) (Utils.random.nextGaussian() * gun.scatter);
 
@@ -59,7 +62,7 @@ public class GunSystem extends AbstractSystem
             entity.add(new Lifetime(gun.lifetime));
             entity.add(new Position(pos.x, pos.y, theta, 5, 1));
             entity.add(new Velocity((float) cos(theta) * speed, (float) sin(theta) * speed, 0));
-            entity.add(new Parent(parent));
+            entity.add(new Association(parent));
             entity.add(new Renderable(Color.RED));
 
             engine.addEntity(entity);

@@ -6,7 +6,7 @@ import static za.co.sourlemon.zambies.Utils.lengthSq;
 import static za.co.sourlemon.zambies.Utils.normal;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Entity;
-import za.co.sourlemon.zambies.ems.components.Parent;
+import za.co.sourlemon.zambies.ems.components.Association;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.nodes.BulletNode;
 import za.co.sourlemon.zambies.ems.nodes.HealthNode;
@@ -37,14 +37,14 @@ public class BulletSystem extends AbstractSystem
             for (HealthNode node : nodes)
             {
                 // prevent survivors from shooting themselves
-                Parent parent = bullet.entity.get(Parent.class);
+                Association parent = bullet.entity.get(Association.class);
                 while (parent != null)
                 {
                     if (parent.entity == node.entity)
                     {
                         continue hnodeloop;
                     }
-                    parent = parent.entity.get(Parent.class);
+                    parent = parent.entity.get(Association.class);
                 }
 
                 // position of "stationary" entity (e.g. zambie)

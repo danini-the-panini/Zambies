@@ -1,16 +1,15 @@
 package za.co.sourlemon.zambies;
 
 import java.awt.Color;
-import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import za.co.sourlemon.zambies.ems.components.*;
 import za.co.sourlemon.zambies.ems.factories.*;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
-import za.co.sourlemon.zambies.ems.nodes.HealthBarSystem;
 import za.co.sourlemon.zambies.ems.systems.*;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.ISystem;
+import za.co.sourlemon.zambies.ems.Value;
 
 /**
  *
@@ -24,9 +23,9 @@ public class App
     public static final int SCREEN_HEIGHT = 600;
     public static final String WINDOW_TITLE = "Zambies!";
     public static final GunFactoryRequest SUBMACHINE_GUN = new GunFactoryRequest(1000, 10,
-            0.5f, 0.1, 1, (float)Math.PI/64.0f, 2, -8, 6, 2, Color.DARK_GRAY);
+            0.5f, 0.1, 1, (float) Math.PI / 64.0f, 0, 0, 2, -8, 6, 2, Color.DARK_GRAY);
     public static final GunFactoryRequest SHOTGUN = new GunFactoryRequest(1000, 10,
-            0.5f, 0.7, 7, (float)Math.PI/32f, 2, -8, 6, 2, Color.DARK_GRAY);
+            0.5f, 0.7, 7, (float) Math.PI / 32f, 0, 0, 2, -8, 6, 3, Color.BLACK);
 
     /**
      * @param args the command line arguments
@@ -35,10 +34,10 @@ public class App
     {
         ISystem[] renderSystems = new ISystem[]
         {
+
             new AWTRenderSystem(),
             new LWJGLRenderSystem()
         };
-
         final Engine engine = new Engine();
 
         // create event node
@@ -51,21 +50,21 @@ public class App
         // create survivor
         SurvivorFactory survivorFactory = new SurvivorFactory();
         Entity survivor = survivorFactory.create(new SurvivorFactoryRequest(0, 0));
-        engine.addEntity(survivor);
-        
-        // create gun
+
+        // create guns
         GunFactory gunFactory = new GunFactory();
-        Entity gunEntity = gunFactory.create(SHOTGUN);
+        Entity gunEntity = gunFactory.create(SUBMACHINE_GUN);
         engine.addEntity(gunEntity);
         
-        // create equipment slot
-        Entity primarySlot = new Entity();
-        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
-        primarySlot.add(new Usable());
-        engine.addEntity(primarySlot);
+        Entity shotgunEntity = gunFactory.create(SHOTGUN.atPosition(200, 200));
+        shotgunEntity.add(new Pickup());
+        engine.addEntity(shotgunEntity);
         
+        engine.addEntity(survivor);
+
         // "equip" gun
-        gunEntity.add(new Parent(survivor));
+        survivor.associate(gunEntity);
+        Entity primarySlot = survivor.get(EquipControl.class).slot;
         primarySlot.add(new EquipSlot(gunEntity));
 
         // health bar
@@ -74,10 +73,12 @@ public class App
         engine.addEntity(healthBarBG);
 
         Entity healthBar = new Entity();
-        healthBar.add(new ProgressBar(100.0f, 1.0f, false));
+        Health health = survivor.get(Health.class);
+        healthBar.add(new ProgressBar(new Value<Float>("maxHp", health),
+                new Value<Float>("hp", health), 100, false));
         healthBar.add(new HUD(20, 20, 100, 5, Color.GREEN));
-        healthBar.add(survivor.get(Health.class));
         engine.addEntity(healthBar);
+
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
         engine.addSystem(new ZambieAttackSystem());
@@ -87,11 +88,11 @@ public class App
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new OffsetSystem());
         engine.addSystem(new ControlSystem());
+        engine.addSystem(new PickupSystem());
         engine.addSystem(new EquipmentService());
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
         engine.addSystem(new HealthSystem());
-        engine.addSystem(new HealthBarSystem());
         engine.addSystem(new ProgressBarSystem());
         engine.addSystem((ISystem) JOptionPane.showInputDialog(
                 null, "Select Rendering System", "Render System",
