@@ -21,9 +21,8 @@ public class ControlSystem extends AbstractSystem
 
         for (ControlNode node : nodes)
         {
-            node.usable.using = (node.control.mouse
-                    ? events.mouse.button[node.control.trigger]
-                    : events.keyboard.keys[node.control.trigger]);
+            // FIXME: use new event manager for mouse buttons
+            node.usable.using = (events.mouse.button[node.control.trigger]);
         }
     }
 

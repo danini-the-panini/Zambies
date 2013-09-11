@@ -1,12 +1,32 @@
 package za.co.sourlemon.zambies.ems;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Daniel
  */
-public interface EventManager
+public class EventManager
 {
-    public void fireEvent(Event event);
+    private HashMap<Event, Boolean> events = new HashMap<>();
     
-    public void listen(Event example, EventListener callback);
+    public void fire(Event event)
+    {
+        set(event, true);
+    }
+    
+    public void cancel(Event event)
+    {
+        set(event, false);
+    }
+    
+    public void set(Event event, boolean value)
+    {
+        events.put(event, value);
+    }
+    
+    public boolean get(Event event)
+    {
+        return events.get(event) == Boolean.TRUE;
+    }
 }

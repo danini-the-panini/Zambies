@@ -16,11 +16,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import static za.co.sourlemon.zambies.App.*;
+import za.co.sourlemon.zambies.ems.Event;
+import za.co.sourlemon.zambies.ems.EventManager;
+import za.co.sourlemon.zambies.ems.components.ButtonPress;
 
 /**
  *
@@ -31,17 +36,40 @@ public class AWTRenderSystem extends AbstractSystem
 
     private Frame frame;
     private RenderCanvas canvas;
-    private boolean[] keys = new boolean[65535];
+    private Queue<KE> keyEvents = new ConcurrentLinkedQueue<>();
     private float mouseX, mouseY;
     private boolean[] button = new boolean[15];
     private boolean windowClosing = false;
     private float camX, camY, camOX, camOY;
+    
+    private class KE
+    {
+        int keyCode;
+        boolean value;
+
+        public KE(int keyCode, boolean value)
+        {
+            this.keyCode = keyCode;
+            this.value = value;
+        }
+        
+    }
 
     private void handleEvents()
     {
         EventNode events = engine.getNode(EventNode.class);
+        EventManager eventManager = engine.getEventManager();
+        
+        // since this is the only place where events are dequeued,
+        // there will always be numEvents or more events on the queue
+        // when this followin line is executed.
+        int numEvents = keyEvents.size();
+        for (int i = 0; i < numEvents; i++)
+        {
+            KE e = keyEvents.remove();
+            eventManager.set(new Event(e.keyCode, ButtonPress.class), e.value);
+        }
 
-        System.arraycopy(keys, 0, events.keyboard.keys, 0, keys.length);
         System.arraycopy(button, 0, events.mouse.button, 0, button.length);
         events.mouse.x = mouseX - camX - camOX;
         events.mouse.y = mouseY - camY - camOY;
@@ -93,13 +121,13 @@ public class AWTRenderSystem extends AbstractSystem
             @Override
             public void keyPressed(KeyEvent e)
             {
-                keys[e.getKeyCode()] = true;
+                keyEvents.add(new KE(e.getKeyCode(),true));
             }
 
             @Override
             public void keyReleased(KeyEvent e)
             {
-                keys[e.getKeyCode()] = false;
+                keyEvents.add(new KE(e.getKeyCode(),false));
             }
         });
 

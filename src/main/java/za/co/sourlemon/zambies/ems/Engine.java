@@ -22,6 +22,7 @@ public class Engine implements EntityListener
     private Collection<Entity> toRemove = new ArrayList<>();
     private Map<Class, Collection<Object>> nodeLists = new HashMap<>();
     private Map<Class, Family> families = new HashMap<>();
+    private EventManager eventManager = new EventManager();
     boolean updating = false;
 
     /**
@@ -217,4 +218,14 @@ public class Engine implements EntityListener
 
         systems.clear();
     }
+
+    /**
+     * Get the engine's instance of EventManager.
+     * @return 
+     */
+    public EventManager getEventManager()
+    {
+        return eventManager;
+    }
+    
 }

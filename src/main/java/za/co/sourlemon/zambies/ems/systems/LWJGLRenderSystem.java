@@ -12,7 +12,10 @@ import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.nodes.RenderNode;
 import static za.co.sourlemon.zambies.App.*;
 import static za.co.sourlemon.zambies.Utils.*;
+import za.co.sourlemon.zambies.ems.Event;
+import za.co.sourlemon.zambies.ems.EventManager;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
+import za.co.sourlemon.zambies.ems.components.ButtonPress;
 import za.co.sourlemon.zambies.ems.components.HUD;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
@@ -55,6 +58,7 @@ public class LWJGLRenderSystem extends AbstractSystem
     public void update(double delta)
     {
         // TODO: use the event buffer to do this.
+        EventManager eventManager = engine.getEventManager();
 
         EventNode events = engine.getNode(EventNode.class);
         events.mouse.x = Mouse.getX() - camX - SCREEN_WIDTH / 2;
@@ -66,7 +70,8 @@ public class LWJGLRenderSystem extends AbstractSystem
         events.window.windowClosing = Display.isCloseRequested();
         for (int i = 0; i < Keyboard.getKeyCount(); i++)
         {
-            events.keyboard.keys[KeyLWJGLtoAWT(i)] = Keyboard.isKeyDown(i);
+            eventManager.set(new Event(KeyLWJGLtoAWT(i), ButtonPress.class),
+                    Keyboard.isKeyDown(i));
         }
 
 

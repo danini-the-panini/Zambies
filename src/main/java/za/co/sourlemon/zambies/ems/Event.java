@@ -8,10 +8,10 @@ import java.util.Objects;
  */
 public class Event
 {
-    private final String symbol;
+    private final int symbol;
     private final Object source;
 
-    public Event(String symbol, Object source)
+    public Event(int symbol, Object source)
     {
         this.symbol = symbol;
         this.source = source;
@@ -22,7 +22,7 @@ public class Event
         return source;
     }
 
-    public String getSymbol()
+    public int getSymbol()
     {
         return symbol;
     }
@@ -33,8 +33,7 @@ public class Event
         if (obj instanceof Event)
         {
             Event other = (Event) obj;
-            return other.source == source
-                    && (symbol == null ? other.symbol == null : symbol.equals(other.symbol));
+            return other.source.equals(source) && other.symbol == symbol;
         }
         return false;
     }
@@ -42,10 +41,15 @@ public class Event
     @Override
     public int hashCode()
     {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.symbol);
-        hash = 97 * hash + Objects.hashCode(this.source);
+        int hash = 5;
+        hash = 79 * hash + this.symbol;
+        hash = 79 * hash + Objects.hashCode(this.source);
         return hash;
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return source.toString() + "::" + symbol;
+    }
 }

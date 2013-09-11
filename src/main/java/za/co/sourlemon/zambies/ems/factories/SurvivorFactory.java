@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import za.co.sourlemon.zambies.ems.Entity;
+import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Control;
+import za.co.sourlemon.zambies.ems.components.ButtonPress;
 import za.co.sourlemon.zambies.ems.components.EquipControl;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
@@ -31,8 +33,12 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         
         entity.add(new Position(request.spawnX, request.spawnY, 0, 6, 6));
         entity.add(new Velocity(0, 0, 0));
-        entity.add(new MotionControl(KeyEvent.VK_W, KeyEvent.VK_S,
-                KeyEvent.VK_A, KeyEvent.VK_D, 150));
+        entity.add(new MotionControl(
+                new Event(KeyEvent.VK_W, ButtonPress.class),
+                new Event(KeyEvent.VK_S, ButtonPress.class),
+                new Event(KeyEvent.VK_A, ButtonPress.class),
+                new Event(KeyEvent.VK_D, ButtonPress.class),
+                150));
         entity.add(new MouseLook());
         entity.add(new Renderable(Color.BLUE));
         entity.add(new ZambieAttractor(1, 400, 25));
@@ -46,7 +52,9 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         primarySlot.add(new Usable());
         entity.getDependents().add(primarySlot);
         
-        entity.add(new EquipControl(KeyEvent.VK_E, primarySlot));
+        // FIXME: replace with ButtonTap when implemented
+        entity.add(new EquipControl(new Event(KeyEvent.VK_E, ButtonPress.class),
+                primarySlot));
         
         return entity;
     }
