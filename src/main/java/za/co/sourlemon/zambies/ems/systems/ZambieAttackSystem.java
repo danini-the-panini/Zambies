@@ -26,7 +26,7 @@ public class ZambieAttackSystem extends AbstractSystem
             
             for (ZambieAttractorNode anode : anodes)
             {
-                if (znode.entity == anode.entity)
+                if (znode.getEntity() == anode.getEntity())
                 {
                     continue;
                 }
@@ -43,7 +43,7 @@ public class ZambieAttackSystem extends AbstractSystem
                 if (distSq < 0 && znode.claws.timeSinceLastAttack > znode.claws.attackInterval)
                 {
                     znode.claws.timeSinceLastAttack = 0;
-                    Health health = anode.entity.get(Health.class);
+                    Health health = anode.getEntity().get(Health.class);
                     if (health != null)
                     {
                         health.hp -= znode.claws.damage;

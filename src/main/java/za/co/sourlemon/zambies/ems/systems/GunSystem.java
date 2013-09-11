@@ -35,7 +35,7 @@ public class GunSystem extends AbstractSystem
                     && node.gun.timeSinceLastFire >= node.gun.fireInterval)
             {
                 node.gun.timeSinceLastFire = 0;
-                createBullet(node.gun, node.position, node.entity);
+                createBullet(node.gun, node.position, node.getEntity());
 
                 // to stop glitch where gun doesn't stop firing
                 node.usable.using = false;

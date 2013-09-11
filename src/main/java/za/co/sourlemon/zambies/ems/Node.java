@@ -6,5 +6,10 @@ package za.co.sourlemon.zambies.ems;
  */
 public class Node
 {
-    public Entity entity;
+    protected Entity entity;
+    
+    public final Entity getEntity()
+    {
+        return entity;
+    }
 }

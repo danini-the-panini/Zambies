@@ -154,7 +154,7 @@ public class AWTRenderSystem extends AbstractSystem
 
         for (RenderNode node : nodes)
         {
-            if (node.entity.has(CameraLock.class))
+            if (node.getEntity().has(CameraLock.class))
             {
                 camX = -node.position.x;
                 camY = -node.position.y;
