@@ -26,6 +26,7 @@ import static za.co.sourlemon.zambies.App.*;
 import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.EventManager;
 import za.co.sourlemon.zambies.ems.components.ButtonPress;
+import za.co.sourlemon.zambies.ems.components.ButtonTap;
 
 /**
  *
@@ -36,6 +37,7 @@ public class AWTRenderSystem extends AbstractSystem
 
     private Frame frame;
     private RenderCanvas canvas;
+    private Queue<KE> keyTaps = new ConcurrentLinkedQueue<>();
     private Queue<KE> keyEvents = new ConcurrentLinkedQueue<>();
     private float mouseX, mouseY;
     private boolean[] button = new boolean[15];
@@ -60,6 +62,12 @@ public class AWTRenderSystem extends AbstractSystem
         EventNode events = engine.getNode(EventNode.class);
         EventManager eventManager = engine.getEventManager();
         
+        while (!keyTaps.isEmpty())
+        {
+            KE e = keyTaps.remove();
+            eventManager.set(new Event(e.keyCode, ButtonTap.class), false);
+        }
+
         // since this is the only place where events are dequeued,
         // there will always be numEvents or more events on the queue
         // when this followin line is executed.
@@ -68,6 +76,11 @@ public class AWTRenderSystem extends AbstractSystem
         {
             KE e = keyEvents.remove();
             eventManager.set(new Event(e.keyCode, ButtonPress.class), e.value);
+            if (e.value)
+            {
+                eventManager.set(new Event(e.keyCode, ButtonTap.class), e.value);
+                keyTaps.add(e);
+            }
         }
 
         System.arraycopy(button, 0, events.mouse.button, 0, button.length);

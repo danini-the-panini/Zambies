@@ -9,6 +9,7 @@ import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Control;
 import za.co.sourlemon.zambies.ems.components.ButtonPress;
+import za.co.sourlemon.zambies.ems.components.ButtonTap;
 import za.co.sourlemon.zambies.ems.components.EquipControl;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
@@ -53,7 +54,7 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         entity.getDependents().add(primarySlot);
         
         // FIXME: replace with ButtonTap when implemented
-        entity.add(new EquipControl(new Event(KeyEvent.VK_E, ButtonPress.class),
+        entity.add(new EquipControl(new Event(KeyEvent.VK_E, ButtonTap.class),
                 primarySlot));
         
         return entity;
