@@ -87,10 +87,10 @@ public class App
         engine.addSystem(new MouseControlSystem());
         engine.addSystem(new OffsetSystem());
         engine.addSystem(new ControlSystem());
-        engine.addSystem(new PickupSystem());
-        engine.addSystem(new EquipmentService());
         engine.addSystem(new GunSystem());
         engine.addSystem(new BulletSystem());
+        engine.addSystem(new PickupSystem());
+        engine.addSystem(new EquipmentService());
         engine.addSystem(new HealthSystem());
         engine.addSystem(new ProgressBarSystem());
         engine.addSystem((ISystem) JOptionPane.showInputDialog(
