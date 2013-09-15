@@ -16,6 +16,7 @@ import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.EventManager;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.ButtonPress;
+import za.co.sourlemon.zambies.ems.components.ButtonTap;
 import za.co.sourlemon.zambies.ems.components.HUD;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
@@ -70,10 +71,11 @@ public class LWJGLRenderSystem extends AbstractSystem
         events.window.windowClosing = Display.isCloseRequested();
         for (int i = 0; i < Keyboard.getKeyCount(); i++)
         {
-            eventManager.set(new Event(KeyLWJGLtoAWT(i), ButtonPress.class),
-                    Keyboard.isKeyDown(i));
+            Event keyPress = new Event(KeyLWJGLtoAWT(i), ButtonPress.class);
+            eventManager.set(new Event(KeyLWJGLtoAWT(i), ButtonTap.class),
+                    !eventManager.get(keyPress) && Keyboard.isKeyDown(i));
+            eventManager.set(keyPress, Keyboard.isKeyDown(i));
         }
-
 
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
@@ -152,15 +154,15 @@ public class LWJGLRenderSystem extends AbstractSystem
         GL11.glPushMatrix();
         GL11.glTranslatef(x, y, 0);
         GL11.glScalef(w, h, 1);
-        
+
         GL11.glBegin(GL11.GL_QUADS);
-        
+
         GL11.glColor3f(r, g, b);
         GL11.glVertex2f(0, 0);
         GL11.glVertex2f(1, 0);
         GL11.glVertex2f(1, 1);
         GL11.glVertex2f(0, 1);
-        
+
         GL11.glEnd();
         GL11.glPopMatrix();
     }
