@@ -8,12 +8,13 @@ import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Control;
-import za.co.sourlemon.zambies.ems.components.ButtonPress;
-import za.co.sourlemon.zambies.ems.components.ButtonTap;
+import za.co.sourlemon.zambies.ems.components.KeyPress;
+import za.co.sourlemon.zambies.ems.components.KeyTap;
 import za.co.sourlemon.zambies.ems.components.EquipControl;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.MotionControl;
 import za.co.sourlemon.zambies.ems.components.MouseLook;
+import za.co.sourlemon.zambies.ems.components.MousePress;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.components.Usable;
@@ -35,10 +36,10 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         entity.add(new Position(request.spawnX, request.spawnY, 0, 6, 6));
         entity.add(new Velocity(0, 0, 0));
         entity.add(new MotionControl(
-                new Event(KeyEvent.VK_W, ButtonPress.class),
-                new Event(KeyEvent.VK_S, ButtonPress.class),
-                new Event(KeyEvent.VK_A, ButtonPress.class),
-                new Event(KeyEvent.VK_D, ButtonPress.class),
+                new Event(KeyEvent.VK_W, KeyPress.class),
+                new Event(KeyEvent.VK_S, KeyPress.class),
+                new Event(KeyEvent.VK_A, KeyPress.class),
+                new Event(KeyEvent.VK_D, KeyPress.class),
                 150));
         entity.add(new MouseLook());
         entity.add(new Renderable(Color.BLUE));
@@ -48,13 +49,13 @@ public class SurvivorFactory implements Factory<SurvivorFactoryRequest>
         
         // create equipment slot
         Entity primarySlot = new Entity();
-        primarySlot.add(new Control(MouseEvent.BUTTON1, true));
+        primarySlot.add(new Control(new Event(MouseEvent.BUTTON1, MousePress.class)));
         //primarySlot.add(new Control(KeyEvent.VK_SPACE, false));
         primarySlot.add(new Usable());
         entity.getDependents().add(primarySlot);
         
         // FIXME: replace with ButtonTap when implemented
-        entity.add(new EquipControl(new Event(KeyEvent.VK_E, ButtonTap.class),
+        entity.add(new EquipControl(new Event(KeyEvent.VK_E, KeyTap.class),
                 primarySlot));
         
         return entity;

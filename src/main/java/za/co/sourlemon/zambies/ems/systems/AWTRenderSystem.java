@@ -25,8 +25,10 @@ import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import static za.co.sourlemon.zambies.App.*;
 import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.EventManager;
-import za.co.sourlemon.zambies.ems.components.ButtonPress;
-import za.co.sourlemon.zambies.ems.components.ButtonTap;
+import za.co.sourlemon.zambies.ems.components.KeyPress;
+import za.co.sourlemon.zambies.ems.components.KeyTap;
+import za.co.sourlemon.zambies.ems.components.MousePress;
+import za.co.sourlemon.zambies.ems.components.MouseTap;
 
 /**
  *
@@ -37,21 +39,21 @@ public class AWTRenderSystem extends AbstractSystem
 
     private Frame frame;
     private RenderCanvas canvas;
-    private Queue<KE> keyTaps = new ConcurrentLinkedQueue<>();
-    private Queue<KE> keyEvents = new ConcurrentLinkedQueue<>();
+    private Queue<Event> taps = new ConcurrentLinkedQueue<>();
+    private Queue<E> presses = new ConcurrentLinkedQueue<>();
     private float mouseX, mouseY;
     private boolean[] button = new boolean[15];
     private boolean windowClosing = false;
     private float camX, camY, camOX, camOY;
     
-    private class KE
+    private class E
     {
-        int keyCode;
+        Event e;
         boolean value;
 
-        public KE(int keyCode, boolean value)
+        public E(Event e, boolean value)
         {
-            this.keyCode = keyCode;
+            this.e = e;
             this.value = value;
         }
         
@@ -62,30 +64,30 @@ public class AWTRenderSystem extends AbstractSystem
         EventNode events = engine.getNode(EventNode.class);
         EventManager eventManager = engine.getEventManager();
         
-        while (!keyTaps.isEmpty())
+        while (!taps.isEmpty())
         {
-            KE e = keyTaps.remove();
-            eventManager.set(new Event(e.keyCode, ButtonTap.class), false);
+            Event e = taps.remove();
+            eventManager.set(e, false);
         }
 
         // since this is the only place where events are dequeued,
         // there will always be numEvents or more events on the queue
         // when this followin line is executed.
-        int numEvents = keyEvents.size();
+        int numEvents = presses.size();
         for (int i = 0; i < numEvents; i++)
         {
-            KE e = keyEvents.remove();
-            eventManager.set(new Event(e.keyCode, ButtonPress.class), e.value);
+            E e = presses.remove();
+            eventManager.set(e.e, e.value);
             if (e.value)
             {
-                eventManager.set(new Event(e.keyCode, ButtonTap.class), e.value);
-                keyTaps.add(e);
+                Event tap = new Event(e.e.getSymbol(), e.e.getSource() == KeyPress.class ? KeyTap.class : MouseTap.class);
+                eventManager.set(tap, e.value);
+                taps.add(tap);
             }
         }
 
-        System.arraycopy(button, 0, events.mouse.button, 0, button.length);
-        events.mouse.x = mouseX - camX - camOX;
-        events.mouse.y = mouseY - camY - camOY;
+        events.aim.x = mouseX - camX - camOX;
+        events.aim.y = mouseY - camY - camOY;
         events.window.windowClosing = windowClosing;
     }
 
@@ -134,13 +136,13 @@ public class AWTRenderSystem extends AbstractSystem
             @Override
             public void keyPressed(KeyEvent e)
             {
-                keyEvents.add(new KE(e.getKeyCode(),true));
+                presses.add(new E(new Event(e.getKeyCode(), KeyPress.class), true));
             }
 
             @Override
             public void keyReleased(KeyEvent e)
             {
-                keyEvents.add(new KE(e.getKeyCode(),false));
+                presses.add(new E(new Event(e.getKeyCode(), KeyPress.class), false));
             }
         });
 
@@ -149,13 +151,13 @@ public class AWTRenderSystem extends AbstractSystem
             @Override
             public void mousePressed(MouseEvent e)
             {
-                button[e.getButton()] = true;
+                presses.add(new E(new Event(e.getButton(), MousePress.class), true));
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                button[e.getButton()] = false;
+                presses.add(new E(new Event(e.getButton(), MousePress.class), false));
             }
 
             @Override

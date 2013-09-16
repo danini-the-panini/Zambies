@@ -15,9 +15,11 @@ import static za.co.sourlemon.zambies.Utils.*;
 import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.EventManager;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
-import za.co.sourlemon.zambies.ems.components.ButtonPress;
-import za.co.sourlemon.zambies.ems.components.ButtonTap;
+import za.co.sourlemon.zambies.ems.components.KeyPress;
+import za.co.sourlemon.zambies.ems.components.KeyTap;
 import za.co.sourlemon.zambies.ems.components.HUD;
+import za.co.sourlemon.zambies.ems.components.MousePress;
+import za.co.sourlemon.zambies.ems.components.MouseTap;
 import za.co.sourlemon.zambies.ems.components.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
@@ -62,17 +64,20 @@ public class LWJGLRenderSystem extends AbstractSystem
         EventManager eventManager = engine.getEventManager();
 
         EventNode events = engine.getNode(EventNode.class);
-        events.mouse.x = Mouse.getX() - camX - SCREEN_WIDTH / 2;
-        events.mouse.y = SCREEN_HEIGHT / 2 - Mouse.getY() - camY;
+        events.aim.x = Mouse.getX() - camX - SCREEN_WIDTH / 2;
+        events.aim.y = SCREEN_HEIGHT / 2 - Mouse.getY() - camY;
         for (int i = 0; i < Mouse.getButtonCount(); i++)
         {
-            events.mouse.button[MouseLWJGLtoAWT(i)] = Mouse.isButtonDown(i);
+            Event mousePress = new Event(MouseLWJGLtoAWT(i), MousePress.class);
+            eventManager.set(new Event(MouseLWJGLtoAWT(i), MouseTap.class),
+                    !eventManager.get(mousePress) && Mouse.isButtonDown(i));
+            eventManager.set(mousePress, Mouse.isButtonDown(i));
         }
         events.window.windowClosing = Display.isCloseRequested();
         for (int i = 0; i < Keyboard.getKeyCount(); i++)
         {
-            Event keyPress = new Event(KeyLWJGLtoAWT(i), ButtonPress.class);
-            eventManager.set(new Event(KeyLWJGLtoAWT(i), ButtonTap.class),
+            Event keyPress = new Event(KeyLWJGLtoAWT(i), KeyPress.class);
+            eventManager.set(new Event(KeyLWJGLtoAWT(i), KeyTap.class),
                     !eventManager.get(keyPress) && Keyboard.isKeyDown(i));
             eventManager.set(keyPress, Keyboard.isKeyDown(i));
         }

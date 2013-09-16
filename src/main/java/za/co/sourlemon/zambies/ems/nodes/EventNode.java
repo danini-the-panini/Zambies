@@ -1,7 +1,7 @@
 package za.co.sourlemon.zambies.ems.nodes;
 
 import za.co.sourlemon.zambies.ems.Node;
-import za.co.sourlemon.zambies.ems.components.MouseEvents;
+import za.co.sourlemon.zambies.ems.components.Aim;
 import za.co.sourlemon.zambies.ems.components.WindowEvents;
 
 /**
@@ -11,5 +11,5 @@ import za.co.sourlemon.zambies.ems.components.WindowEvents;
 public class EventNode extends Node
 {
     public WindowEvents window;
-    public MouseEvents mouse;
+    public Aim aim;
 }

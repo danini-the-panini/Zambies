@@ -1,18 +1,18 @@
 package za.co.sourlemon.zambies.ems.components;
 
+import za.co.sourlemon.zambies.ems.Event;
+
 /**
  *
  * @author daniel
  */
 public class Control
 {
-    public int trigger;
-    public boolean mouse;
-
-    public Control(int trigger, boolean mouse)
+    public Event trigger;
+    
+    public Control(Event trigger)
     {
         this.trigger = trigger;
-        this.mouse = mouse;
     }
     
 }

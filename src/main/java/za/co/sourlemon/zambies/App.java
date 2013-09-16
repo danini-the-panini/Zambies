@@ -43,7 +43,7 @@ public class App
         // create event node
         Entity eventEntity = new Entity();
         eventEntity.add(new WindowEvents());
-        eventEntity.add(new MouseEvents());
+        eventEntity.add(new Aim());
         engine.addEntity(eventEntity);
 
         // create survivor
