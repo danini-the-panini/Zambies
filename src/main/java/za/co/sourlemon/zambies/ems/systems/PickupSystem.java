@@ -5,10 +5,10 @@ import za.co.sourlemon.zambies.Utils;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.EventManager;
-import za.co.sourlemon.zambies.ems.components.EquipSlot;
+import za.co.sourlemon.zambies.ems.components.equipment.EquipSlot;
 import za.co.sourlemon.zambies.ems.components.Pickup;
-import za.co.sourlemon.zambies.ems.components.Usable;
-import za.co.sourlemon.zambies.ems.nodes.EquipControlNode;
+import za.co.sourlemon.zambies.ems.components.equipment.Usable;
+import za.co.sourlemon.zambies.ems.nodes.equipment.EquipControlNode;
 import za.co.sourlemon.zambies.ems.nodes.PickupNode;
 
 /**

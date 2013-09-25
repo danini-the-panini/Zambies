@@ -8,18 +8,18 @@ import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.Factory;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
 import za.co.sourlemon.zambies.ems.components.Control;
-import za.co.sourlemon.zambies.ems.components.KeyPress;
-import za.co.sourlemon.zambies.ems.components.KeyTap;
-import za.co.sourlemon.zambies.ems.components.EquipControl;
+import za.co.sourlemon.zambies.ems.components.input.KeyPress;
+import za.co.sourlemon.zambies.ems.components.input.KeyTap;
+import za.co.sourlemon.zambies.ems.components.equipment.EquipControl;
 import za.co.sourlemon.zambies.ems.components.Health;
-import za.co.sourlemon.zambies.ems.components.MotionControl;
-import za.co.sourlemon.zambies.ems.components.MouseLook;
-import za.co.sourlemon.zambies.ems.components.MousePress;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.MotionControl;
+import za.co.sourlemon.zambies.ems.components.input.MouseLook;
+import za.co.sourlemon.zambies.ems.components.input.MousePress;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
-import za.co.sourlemon.zambies.ems.components.Usable;
-import za.co.sourlemon.zambies.ems.components.Velocity;
-import za.co.sourlemon.zambies.ems.components.ZambieAttractor;
+import za.co.sourlemon.zambies.ems.components.equipment.Usable;
+import za.co.sourlemon.zambies.ems.components.motion.Velocity;
+import za.co.sourlemon.zambies.ems.components.zambie.ZambieAttractor;
 
 /**
  *

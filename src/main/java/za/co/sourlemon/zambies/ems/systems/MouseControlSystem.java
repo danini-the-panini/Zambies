@@ -3,9 +3,9 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
-import za.co.sourlemon.zambies.ems.components.Aim;
+import za.co.sourlemon.zambies.ems.components.input.Aim;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
-import za.co.sourlemon.zambies.ems.nodes.MouseControlNode;
+import za.co.sourlemon.zambies.ems.nodes.input.MouseControlNode;
 
 /**
  *

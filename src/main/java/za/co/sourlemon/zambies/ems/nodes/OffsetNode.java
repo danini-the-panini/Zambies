@@ -3,7 +3,7 @@ package za.co.sourlemon.zambies.ems.nodes;
 import za.co.sourlemon.zambies.ems.Node;
 import za.co.sourlemon.zambies.ems.components.Offset;
 import za.co.sourlemon.zambies.ems.components.Association;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 
 /**
  *

@@ -2,11 +2,11 @@ package za.co.sourlemon.zambies.ems.factories;
 
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.Factory;
-import za.co.sourlemon.zambies.ems.components.Gun;
+import za.co.sourlemon.zambies.ems.components.weapon.Gun;
 import za.co.sourlemon.zambies.ems.components.Offset;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
-import za.co.sourlemon.zambies.ems.components.Usable;
+import za.co.sourlemon.zambies.ems.components.equipment.Usable;
 
 /**
  *

@@ -5,18 +5,18 @@ import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.random;
 import static java.lang.Math.sin;
-import za.co.sourlemon.zambies.ems.nodes.ZambieAttractorNode;
+import za.co.sourlemon.zambies.ems.nodes.zambie.ZambieAttractorNode;
 import java.util.List;
 import za.co.sourlemon.zambies.Utils;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.components.Health;
 import za.co.sourlemon.zambies.ems.components.Lifetime;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
-import za.co.sourlemon.zambies.ems.components.Velocity;
-import za.co.sourlemon.zambies.ems.components.ZambieAI;
-import za.co.sourlemon.zambies.ems.components.ZambieClaws;
+import za.co.sourlemon.zambies.ems.components.motion.Velocity;
+import za.co.sourlemon.zambies.ems.components.zambie.ZambieAI;
+import za.co.sourlemon.zambies.ems.components.zambie.ZambieClaws;
 
 public class ZambieAttractorSystem extends AbstractSystem
 {

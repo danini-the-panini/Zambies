@@ -7,14 +7,14 @@ import java.util.List;
 import za.co.sourlemon.zambies.Utils;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Entity;
-import za.co.sourlemon.zambies.ems.components.Bullet;
-import za.co.sourlemon.zambies.ems.components.Gun;
+import za.co.sourlemon.zambies.ems.components.weapon.Bullet;
+import za.co.sourlemon.zambies.ems.components.weapon.Gun;
 import za.co.sourlemon.zambies.ems.components.Lifetime;
 import za.co.sourlemon.zambies.ems.components.Association;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 import za.co.sourlemon.zambies.ems.components.Renderable;
-import za.co.sourlemon.zambies.ems.components.Velocity;
-import za.co.sourlemon.zambies.ems.nodes.GunNode;
+import za.co.sourlemon.zambies.ems.components.motion.Velocity;
+import za.co.sourlemon.zambies.ems.nodes.weapon.GunNode;
 
 /**
  *

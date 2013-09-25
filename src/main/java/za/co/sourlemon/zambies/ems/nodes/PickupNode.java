@@ -2,7 +2,7 @@ package za.co.sourlemon.zambies.ems.nodes;
 
 import za.co.sourlemon.zambies.ems.Node;
 import za.co.sourlemon.zambies.ems.components.Pickup;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 
 /**
  *

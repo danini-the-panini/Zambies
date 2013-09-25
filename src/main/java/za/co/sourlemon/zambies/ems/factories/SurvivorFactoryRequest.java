@@ -1,7 +1,7 @@
 package za.co.sourlemon.zambies.ems.factories;
 
 import za.co.sourlemon.zambies.ems.FactoryRequest;
-import za.co.sourlemon.zambies.ems.components.Gun;
+import za.co.sourlemon.zambies.ems.components.weapon.Gun;
 
 /**
  *

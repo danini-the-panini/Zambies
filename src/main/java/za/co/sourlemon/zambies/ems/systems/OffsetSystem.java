@@ -4,7 +4,7 @@ import java.util.List;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.components.Offset;
-import za.co.sourlemon.zambies.ems.components.Position;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
 import za.co.sourlemon.zambies.ems.nodes.OffsetNode;
 
 /**

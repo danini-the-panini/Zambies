@@ -1,9 +1,9 @@
 package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
-import za.co.sourlemon.zambies.ems.components.Position;
-import za.co.sourlemon.zambies.ems.nodes.ZambieAINode;
-import za.co.sourlemon.zambies.ems.nodes.ZambieAttractorNode;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
+import za.co.sourlemon.zambies.ems.nodes.zambie.ZambieAINode;
+import za.co.sourlemon.zambies.ems.nodes.zambie.ZambieAttractorNode;
 import static java.lang.Math.*;
 import static za.co.sourlemon.zambies.Utils.*;
 import za.co.sourlemon.zambies.ems.AbstractSystem;

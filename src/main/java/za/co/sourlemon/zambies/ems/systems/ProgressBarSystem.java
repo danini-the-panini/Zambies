@@ -2,7 +2,7 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
-import za.co.sourlemon.zambies.ems.nodes.ProgressBarNode;
+import za.co.sourlemon.zambies.ems.nodes.hud.ProgressBarNode;
 
 /**
  *

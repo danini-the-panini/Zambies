@@ -6,8 +6,8 @@ import static za.co.sourlemon.zambies.Utils.lengthSq;
 import static za.co.sourlemon.zambies.Utils.normal;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.components.Association;
-import za.co.sourlemon.zambies.ems.components.Position;
-import za.co.sourlemon.zambies.ems.nodes.BulletNode;
+import za.co.sourlemon.zambies.ems.components.motion.Position;
+import za.co.sourlemon.zambies.ems.nodes.weapon.BulletNode;
 import za.co.sourlemon.zambies.ems.nodes.HealthNode;
 
 /**

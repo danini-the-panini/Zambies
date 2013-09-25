@@ -4,8 +4,8 @@ import java.util.List;
 import za.co.sourlemon.zambies.Utils;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.components.Health;
-import za.co.sourlemon.zambies.ems.nodes.ZambieAttractorNode;
-import za.co.sourlemon.zambies.ems.nodes.ZambieClawNode;
+import za.co.sourlemon.zambies.ems.nodes.zambie.ZambieAttractorNode;
+import za.co.sourlemon.zambies.ems.nodes.zambie.ZambieClawNode;
 
 /**
  *

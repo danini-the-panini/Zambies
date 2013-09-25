@@ -1,6 +1,6 @@
 package za.co.sourlemon.zambies.ems.systems;
 
-import za.co.sourlemon.zambies.ems.nodes.MotionNode;
+import za.co.sourlemon.zambies.ems.nodes.motion.MotionNode;
 import java.util.List;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 

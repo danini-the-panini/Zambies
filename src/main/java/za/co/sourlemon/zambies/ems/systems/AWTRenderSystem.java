@@ -25,10 +25,10 @@ import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import static za.co.sourlemon.zambies.App.*;
 import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.EventManager;
-import za.co.sourlemon.zambies.ems.components.KeyPress;
-import za.co.sourlemon.zambies.ems.components.KeyTap;
-import za.co.sourlemon.zambies.ems.components.MousePress;
-import za.co.sourlemon.zambies.ems.components.MouseTap;
+import za.co.sourlemon.zambies.ems.components.input.KeyPress;
+import za.co.sourlemon.zambies.ems.components.input.KeyTap;
+import za.co.sourlemon.zambies.ems.components.input.MousePress;
+import za.co.sourlemon.zambies.ems.components.input.MouseTap;
 
 /**
  *
