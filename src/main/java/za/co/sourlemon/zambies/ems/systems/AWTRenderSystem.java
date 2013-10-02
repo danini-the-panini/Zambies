@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import org.lwjgl.input.Mouse;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.components.CameraLock;
@@ -86,8 +87,10 @@ public class AWTRenderSystem extends AbstractSystem
             }
         }
 
-        events.mouse.x = mouseX - camX - camOX;
-        events.mouse.y = mouseY - camY - camOY;
+        events.mouse.rx = mouseX - camX - camOX;
+        events.mouse.ry = mouseY - camY - camOY;
+        events.mouse.x = mouseX;
+        events.mouse.y = mouseY;
         events.window.windowClosing = windowClosing;
     }
 

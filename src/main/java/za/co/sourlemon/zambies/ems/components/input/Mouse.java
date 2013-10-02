@@ -6,5 +6,6 @@ package za.co.sourlemon.zambies.ems.components.input;
  */
 public class Mouse
 {
+    public float rx, ry;
     public float x, y;
 }

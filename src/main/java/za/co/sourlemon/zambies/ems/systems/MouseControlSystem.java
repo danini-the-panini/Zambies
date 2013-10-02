@@ -24,8 +24,8 @@ public class MouseControlSystem extends AbstractSystem
         for (MouseControlNode node : nodes)
         {
             node.position.theta = (float)Math.atan2(
-                    mouse.y - node.position.y,
-                    mouse.x - node.position.x);
+                    mouse.ry - node.position.y,
+                    mouse.rx - node.position.x);
         }
     }
 
