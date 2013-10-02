@@ -86,8 +86,8 @@ public class AWTRenderSystem extends AbstractSystem
             }
         }
 
-        events.aim.x = mouseX - camX - camOX;
-        events.aim.y = mouseY - camY - camOY;
+        events.mouse.x = mouseX - camX - camOX;
+        events.mouse.y = mouseY - camY - camOY;
         events.window.windowClosing = windowClosing;
     }
 

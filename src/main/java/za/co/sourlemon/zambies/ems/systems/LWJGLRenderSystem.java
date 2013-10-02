@@ -64,8 +64,8 @@ public class LWJGLRenderSystem extends AbstractSystem
         EventManager eventManager = engine.getEventManager();
 
         EventNode events = engine.getNode(EventNode.class);
-        events.aim.x = Mouse.getX() - camX - SCREEN_WIDTH / 2;
-        events.aim.y = SCREEN_HEIGHT / 2 - Mouse.getY() - camY;
+        events.mouse.x = Mouse.getX() - camX - SCREEN_WIDTH / 2;
+        events.mouse.y = SCREEN_HEIGHT / 2 - Mouse.getY() - camY;
         for (int i = 0; i < Mouse.getButtonCount(); i++)
         {
             Event mousePress = new Event(MouseLWJGLtoAWT(i), MousePress.class);

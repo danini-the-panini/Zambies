@@ -3,7 +3,7 @@ package za.co.sourlemon.zambies.ems.systems;
 
 import java.util.List;
 import za.co.sourlemon.zambies.ems.AbstractSystem;
-import za.co.sourlemon.zambies.ems.components.input.Aim;
+import za.co.sourlemon.zambies.ems.components.input.Mouse;
 import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import za.co.sourlemon.zambies.ems.nodes.input.MouseControlNode;
 
@@ -17,7 +17,7 @@ public class MouseControlSystem extends AbstractSystem
     @Override
     public void update(double delta)
     {
-        Aim mouse = engine.getNode(EventNode.class).aim;
+        Mouse mouse = engine.getNode(EventNode.class).mouse;
         
         List<MouseControlNode> nodes = engine.getNodeList(MouseControlNode.class);
         

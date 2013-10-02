@@ -4,7 +4,7 @@ import za.co.sourlemon.zambies.ems.components.hud.HUD;
 import za.co.sourlemon.zambies.ems.components.hud.ProgressBar;
 import za.co.sourlemon.zambies.ems.components.equipment.EquipSlot;
 import za.co.sourlemon.zambies.ems.components.equipment.EquipControl;
-import za.co.sourlemon.zambies.ems.components.input.Aim;
+import za.co.sourlemon.zambies.ems.components.input.Mouse;
 import za.co.sourlemon.zambies.ems.components.input.WindowEvents;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -49,7 +49,7 @@ public class App
         // create event node
         Entity eventEntity = new Entity();
         eventEntity.add(new WindowEvents());
-        eventEntity.add(new Aim());
+        eventEntity.add(new Mouse());
         engine.addEntity(eventEntity);
 
         // create survivor
