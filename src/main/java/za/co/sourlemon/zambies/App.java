@@ -14,8 +14,10 @@ import za.co.sourlemon.zambies.ems.nodes.EventNode;
 import za.co.sourlemon.zambies.ems.systems.*;
 import za.co.sourlemon.zambies.ems.Engine;
 import za.co.sourlemon.zambies.ems.Entity;
+import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.Value;
+import za.co.sourlemon.zambies.ems.components.hud.Button;
 
 /**
  *
@@ -83,6 +85,12 @@ public class App
                 new Value<Float>("hp", health), 100, false));
         healthBar.add(new HUD(20, 20, 100, 5, Color.GREEN));
         engine.addEntity(healthBar);
+        
+        // DEBUG: test button
+        Entity button = new Entity();
+        button.add(new HUD(100, 100, 100, 50, Color.MAGENTA));
+        button.add(new Button(new Event(0, button), Color.MAGENTA, Color.GREEN));
+        engine.addEntity(button);
 
         engine.addSystem(new ZambieAttractorSystem());
         engine.addSystem(new ZambieAISystem());
@@ -99,6 +107,7 @@ public class App
         engine.addSystem(new EquipmentService());
         engine.addSystem(new HealthSystem());
         engine.addSystem(new ProgressBarSystem());
+        engine.addSystem(new ButtonSystem());
         engine.addSystem((ISystem) JOptionPane.showInputDialog(
                 null, "Select Rendering System", "Render System",
                 JOptionPane.QUESTION_MESSAGE, null, renderSystems,
