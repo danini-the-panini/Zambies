@@ -17,6 +17,7 @@ import za.co.sourlemon.zambies.ems.Entity;
 import za.co.sourlemon.zambies.ems.Event;
 import za.co.sourlemon.zambies.ems.ISystem;
 import za.co.sourlemon.zambies.ems.Value;
+import za.co.sourlemon.zambies.ems.components.debug.EventDebug;
 import za.co.sourlemon.zambies.ems.components.hud.Button;
 
 /**
@@ -89,7 +90,12 @@ public class App
         // DEBUG: test button
         Entity button = new Entity();
         button.add(new HUD(100, 100, 100, 50, Color.MAGENTA));
-        button.add(new Button(new Event(0, button), Color.MAGENTA, Color.GREEN));
+        Event e = new Event(0, "button");
+        button.add(new Button(e, Color.MAGENTA, Color.GREEN));
+        engine.addEntity(button);
+        
+        Entity debug = new Entity();
+        debug.add(new EventDebug(e, "Button Clicked!"));
         engine.addEntity(button);
 
         engine.addSystem(new ZambieAttractorSystem());
@@ -108,6 +114,7 @@ public class App
         engine.addSystem(new HealthSystem());
         engine.addSystem(new ProgressBarSystem());
         engine.addSystem(new ButtonSystem());
+        engine.addSystem(new EventDebugger());
         engine.addSystem((ISystem) JOptionPane.showInputDialog(
                 null, "Select Rendering System", "Render System",
                 JOptionPane.QUESTION_MESSAGE, null, renderSystems,
